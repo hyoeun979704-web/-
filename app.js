@@ -96,6 +96,8 @@
   var galEl = $("gallery");
   GAL.forEach(function (id, i) {
     var cell = document.createElement("div");
+    cell.setAttribute("data-reveal", "");
+    cell.setAttribute("data-reveal-init", "scale(.94)");
     cell.style.cssText = "position:relative; aspect-ratio:3/4; border-radius:6px; overflow:hidden; scroll-snap-align:center; box-shadow:0 8px 20px -14px rgba(28,71,51,.5);";
     var img = document.createElement("img");
     img.src = P(id, 900); img.alt = ""; img.loading = "lazy"; img.draggable = false;
@@ -308,8 +310,11 @@
       var sibs = sec ? Array.prototype.slice.call(sec.querySelectorAll("[data-reveal]")) : [el];
       var idx = Math.max(0, sibs.indexOf(el));
       var dl = (idx * 150) + "ms";
-      el.style.opacity = "0"; el.style.transform = "translateY(18px)";
-      el.style.transition = "opacity 1.15s ease " + dl + ", transform 1.15s cubic-bezier(.22,.61,.36,1) " + dl;
+      var init = el.getAttribute("data-reveal-init") || "translateY(18px)";
+      var ease = el.getAttribute("data-reveal-ease") || "cubic-bezier(.22,.61,.36,1)";
+      var dur = el.getAttribute("data-reveal-dur") || "1.15s";
+      el.style.opacity = "0"; el.style.transform = init;
+      el.style.transition = "opacity " + dur + " ease " + dl + ", transform " + dur + " " + ease + " " + dl;
     });
     var revealActive = function () {
       var cr = scroll.getBoundingClientRect();
@@ -321,7 +326,7 @@
         if (settledAtTop || coversView) {
           sec.querySelectorAll("[data-reveal]").forEach(function (el) {
             if (el.style.opacity === "1") return;
-            el.style.opacity = "1"; el.style.transform = "none";
+            el.style.opacity = "1"; el.style.transform = el.getAttribute("data-reveal-to") || "none";
           });
         }
       });
