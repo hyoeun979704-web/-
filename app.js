@@ -334,7 +334,7 @@
         entries.forEach(function (e) {
           if (e.isIntersecting) { revealSection(e.target); io.unobserve(e.target); }
         });
-      }, { root: scroll, threshold: 0.18 });
+      }, { root: null, threshold: 0.18 });
       secs.forEach(function (s) { io.observe(s); });
     } else {
       secs.forEach(revealSection);
