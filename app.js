@@ -239,7 +239,7 @@
   renderGb();
 
   /* ---------- 하단 바 ---------- */
-  $("barContact").addEventListener("click", function () { toast("신랑측 010-7528-4143 · 신부측 010-7528-7504"); });
+  $("barContact").addEventListener("click", function () { toast("신랑측 010-7528-4000 · 신부측 010-7528-7504"); });
   $("barShare").addEventListener("click", function () {
     var SITE = "https://20260823.hyoeun.io";
     var data = { title: "류근창 · 김효은 결혼합니다", text: "2026년 8월 23일, 저희 두 사람의 결혼식에 초대합니다.", url: SITE };
