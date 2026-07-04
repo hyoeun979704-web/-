@@ -18,9 +18,7 @@
   body { margin: 0; }
   ::-webkit-scrollbar { width: 0; height: 0; }
   /* 문서(html) 자체가 스크롤 컨테이너 → 모바일 브라우저 주소창이 스크롤 시 자동으로 접힘.
-     네이티브 CSS 스크롤 스냅(iOS 사파리 포함). */
-  html { scroll-snap-type: y proximity; }
-  #invscroll > section { scroll-snap-align: start; }
+     스냅은 방향 기반(JS)으로 처리 — 아래로 넘기면 다음, 위로 넘기면 이전. 되돌림 없음. */
   [hidden] { display: none !important; }
   /* 데스크톱: 우상단 음악 버튼을 480px 프레임 안쪽에 정렬 */
   @media (min-width: 481px) { #musicBtn { right: calc(50% - 227px) !important; } }

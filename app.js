@@ -340,6 +340,41 @@
       secs.forEach(revealSection);
     }
   }
+  // 방향 기반 섹션 스냅: 아래로 넘기면 다음, 위로 넘기면 이전. 조금 넘겼을 때 뒤로 되돌리지 않음.
+  (function () {
+    var secs = Array.prototype.slice.call(scroll.children).filter(function (e) { return e.tagName === "SECTION"; });
+    if (secs.length < 2) return;
+    var lastY = window.scrollY || 0, dir = 1, tId = null, animating = false;
+    function top(el) { return el.getBoundingClientRect().top + window.scrollY; }
+    function curIdx(y) { var i = 0; for (var k = 0; k < secs.length; k++) { if (top(secs[k]) <= y + 4) i = k; } return i; }
+    function settle() {
+      if (animating) return;
+      var vh = window.innerHeight, y = window.scrollY;
+      var i = curIdx(y), cur = secs[i], next = secs[i + 1], prev = secs[i - 1];
+      var cTop = top(cur), into = y - cTop, TH = vh * 0.12, target = null;
+      var big = cur.getBoundingClientRect().height > vh + 40;
+      if (big) {
+        var bgap = (cTop + cur.getBoundingClientRect().height) - (y + vh);
+        if (dir > 0) { if (next && bgap < TH) target = top(next); }         // 큰 섹션: 바닥 근처서 아래로 → 다음
+        else { if (into < TH && prev) target = top(prev); }                 // top 근처서 위로 → 이전, 그 외 자유
+      } else {
+        if (dir > 0) { if (next && into > TH) target = top(next); }         // 아래로 조금이라도 넘김 → 다음 (되돌림 없음)
+        else { if (into > TH) target = cTop; else if (prev) target = top(prev); } // 위로 → 현재 상단/이전
+      }
+      if (target === null || Math.abs(target - y) < 2) return;
+      animating = true;
+      window.scrollTo({ top: Math.round(target), behavior: "smooth" });
+      setTimeout(function () { animating = false; lastY = window.scrollY; }, 550);
+    }
+    window.addEventListener("scroll", function () {
+      var y = window.scrollY;
+      if (y > lastY + 1) dir = 1; else if (y < lastY - 1) dir = -1;
+      lastY = y;
+      if (animating) return;
+      clearTimeout(tId); tId = setTimeout(settle, 130);
+    }, { passive: true });
+  })();
+
   // 하단 고정탭: 평소 숨김 → (1) 10초 이상 스크롤 멈춤 또는 (2) 마지막 섹션에서 부드럽게 등장
   (function () {
     var bar = $("bottomBar");
