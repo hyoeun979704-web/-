@@ -1,0 +1,498 @@
+/* =========================================================
+   청첩장 (Wedding Invitation) — style.css
+   Mobile-first single-column layout, soft romantic palette.
+   ========================================================= */
+
+:root {
+  --paper: #fbf8f3;
+  --ink: #4a423a;
+  --ink-soft: #8a7f73;
+  --line: #e6ddd0;
+  --gold: #b79b6e;
+  --gold-deep: #997f52;
+  --blush: #f3e7e4;
+  --accent: #c98b8b;
+  --shadow: 0 10px 30px rgba(74, 66, 58, 0.08);
+  --serif: "Nanum Myeongjo", "Gowun Batang", serif;
+  --serif-en: "Cormorant Garamond", "Nanum Myeongjo", serif;
+  --maxw: 430px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* Ensure the `hidden` attribute always wins over display rules below */
+[hidden] { display: none !important; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: #efe9e1;
+  color: var(--ink);
+  font-family: var(--serif);
+  line-height: 1.9;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: 0.01em;
+}
+
+.invitation {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+/* -------- Section base -------- */
+.section {
+  padding: 64px 28px;
+  text-align: center;
+  border-bottom: 1px solid var(--line);
+}
+.section:last-of-type { border-bottom: none; }
+
+.section__deco {
+  display: inline-block;
+  font-family: var(--serif-en);
+  font-size: 15px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin-bottom: 34px;
+  position: relative;
+}
+.section__deco::before,
+.section__deco::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 26px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.6;
+}
+.section__deco::before { left: -38px; }
+.section__deco::after { right: -38px; }
+
+/* -------- Reveal animation -------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.reveal.is-visible { opacity: 1; transform: none; }
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero { padding: 0; }
+.hero__frame { position: relative; }
+.hero__photo {
+  height: 128vw;
+  max-height: 640px;
+  background:
+    linear-gradient(180deg, rgba(120,100,80,0.05), rgba(60,50,40,0.45)),
+    linear-gradient(135deg, #d9c7b4 0%, #c8b49c 45%, #b79b7e 100%);
+  background-size: cover;
+  background-position: center;
+}
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 24px 54px;
+  color: #fff;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.35);
+}
+.hero__label {
+  font-family: var(--serif-en);
+  font-size: 12px;
+  letter-spacing: 0.4em;
+  opacity: 0.9;
+  margin-bottom: 18px;
+}
+.hero__names {
+  font-family: var(--serif-en);
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 1.25;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.hero__amp { font-size: 24px; font-style: italic; opacity: 0.85; margin: 2px 0; }
+.hero__date {
+  margin-top: 22px;
+  font-family: var(--serif-en);
+  font-size: 15px;
+  letter-spacing: 0.22em;
+}
+
+/* =========================================================
+   GREETING
+   ========================================================= */
+.greeting__poem {
+  font-size: 16px;
+  color: var(--ink);
+  margin-bottom: 30px;
+}
+.greeting__body {
+  font-size: 15px;
+  color: var(--ink-soft);
+  margin-bottom: 36px;
+}
+.greeting__family {
+  font-size: 15.5px;
+  line-height: 2.4;
+  padding: 22px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.family__rel { color: var(--gold-deep); font-size: 13px; margin: 0 3px; }
+
+.btn-call {
+  margin-top: 32px;
+  padding: 13px 34px;
+  font-family: var(--serif);
+  font-size: 14px;
+  color: var(--gold-deep);
+  background: transparent;
+  border: 1px solid var(--gold);
+  border-radius: 40px;
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s;
+}
+.btn-call:hover { background: var(--gold); color: #fff; }
+
+.contact-panel {
+  margin-top: 24px;
+  display: flex;
+  gap: 14px;
+  text-align: left;
+}
+.contact-col {
+  flex: 1;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px 14px;
+}
+.contact-col__title {
+  font-size: 13px;
+  color: var(--gold-deep);
+  text-align: center;
+  padding-bottom: 10px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+.contact-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  color: var(--ink);
+  text-decoration: none;
+  padding: 7px 0;
+}
+.contact-ico { font-size: 15px; }
+
+/* =========================================================
+   CALENDAR / D-DAY
+   ========================================================= */
+.calendar__date { font-size: 17px; margin-bottom: 6px; }
+.calendar__place { font-size: 14px; color: var(--ink-soft); margin-bottom: 34px; }
+
+.cal {
+  max-width: 300px;
+  margin: 0 auto 30px;
+  padding: 22px 10px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+.cal__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px 0;
+  font-size: 14px;
+}
+.cal__grid--head {
+  font-family: var(--serif-en);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+  padding-bottom: 12px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+.cal__grid span { padding: 6px 0; }
+.cal--sun, .cal .day--sun { color: var(--accent); }
+.cal--sat, .cal .day--sat { color: #7a92b8; }
+.cal .day--wed {
+  position: relative;
+  color: #fff;
+  font-weight: 700;
+}
+.cal .day--wed::before {
+  content: "";
+  position: absolute;
+  inset: 2px 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  z-index: -1;
+}
+.cal__grid { position: relative; }
+.cal .day--wed { z-index: 0; }
+
+.dday {
+  margin-top: 8px;
+  padding: 18px;
+  background: var(--blush);
+  border-radius: 12px;
+}
+.dday__text { font-size: 15px; }
+.dday__text strong { color: var(--accent); font-weight: 800; }
+
+/* =========================================================
+   GALLERY
+   ========================================================= */
+.gallery__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.gallery__tile {
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.gallery__tile:active { transform: scale(0.97); }
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(30,24,20,0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.lightbox.open { opacity: 1; pointer-events: auto; }
+.lightbox__img {
+  width: 86%;
+  max-width: 400px;
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  background-size: cover;
+  background-position: center;
+}
+
+/* =========================================================
+   LOCATION
+   ========================================================= */
+.location__name { font-size: 18px; margin-bottom: 4px; }
+.location__addr { font-size: 14px; color: var(--ink-soft); margin-bottom: 24px; }
+.map {
+  height: 190px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background:
+    repeating-linear-gradient(45deg, #f2ede4 0 14px, #efe9df 14px 28px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--ink-soft);
+}
+.map__pin { font-size: 30px; }
+.map__hint { font-size: 12px; }
+.location__ways {
+  list-style: none;
+  text-align: left;
+  margin-top: 26px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+.location__ways li { padding: 9px 0; border-bottom: 1px dashed var(--line); }
+.location__ways b { color: var(--gold-deep); margin-right: 8px; font-weight: 700; }
+
+/* =========================================================
+   ACCOUNTS
+   ========================================================= */
+.accounts__lead { font-size: 14px; color: var(--ink-soft); margin-bottom: 26px; }
+.acc-group {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  text-align: left;
+}
+.acc-group summary {
+  padding: 15px 20px;
+  font-size: 15px;
+  cursor: pointer;
+  list-style: none;
+  color: var(--ink);
+  position: relative;
+}
+.acc-group summary::-webkit-details-marker { display: none; }
+.acc-group summary::after {
+  content: "＋";
+  position: absolute;
+  right: 20px;
+  color: var(--gold-deep);
+}
+.acc-group[open] summary::after { content: "－"; }
+.acc-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-top: 1px solid var(--line);
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+.btn-copy {
+  padding: 6px 14px;
+  font-size: 12px;
+  font-family: var(--serif);
+  color: var(--gold-deep);
+  background: var(--paper);
+  border: 1px solid var(--gold);
+  border-radius: 20px;
+  cursor: pointer;
+}
+.btn-copy:active { background: var(--gold); color: #fff; }
+
+/* =========================================================
+   RSVP + GUESTBOOK
+   ========================================================= */
+.rsvp__lead, .accounts__lead { line-height: 1.8; }
+.rsvp__form, .gb__form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+  text-align: left;
+}
+.rsvp__side { display: flex; gap: 24px; justify-content: center; margin-bottom: 6px; }
+.rsvp__side label { font-size: 15px; cursor: pointer; }
+.rsvp__row { display: flex; gap: 12px; }
+.rsvp__row select { flex: 2; }
+.rsvp__row input { flex: 1; }
+
+input, select, textarea {
+  font-family: var(--serif);
+  font-size: 15px;
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 13px 15px;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s;
+}
+input:focus, select:focus, textarea:focus { border-color: var(--gold); }
+textarea { resize: vertical; min-height: 84px; }
+
+.btn-primary {
+  padding: 14px;
+  font-family: var(--serif);
+  font-size: 15px;
+  color: #fff;
+  background: var(--gold-deep);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-primary:hover { background: var(--gold); }
+.rsvp__msg { font-size: 14px; color: var(--gold-deep); text-align: center; margin-top: 4px; }
+
+.gb__list { list-style: none; margin-top: 26px; text-align: left; }
+.gb__item {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+}
+.gb__item-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+.gb__item-name { font-size: 14px; font-weight: 700; color: var(--gold-deep); }
+.gb__item-date { font-size: 11px; color: var(--ink-soft); }
+.gb__item-msg { font-size: 14px; color: var(--ink); line-height: 1.7; }
+.gb__empty { font-size: 13px; color: var(--ink-soft); padding: 20px 0; }
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.footer {
+  padding: 56px 28px 64px;
+  text-align: center;
+  background: var(--blush);
+}
+.footer__names {
+  font-family: var(--serif-en);
+  font-size: 24px;
+  color: var(--gold-deep);
+  margin-bottom: 26px;
+}
+.footer__share { display: flex; gap: 12px; justify-content: center; margin-bottom: 26px; }
+.btn-share {
+  padding: 10px 22px;
+  font-family: var(--serif);
+  font-size: 13px;
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 30px;
+  cursor: pointer;
+}
+.footer__credit {
+  font-family: var(--serif-en);
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  color: var(--ink-soft);
+}
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+.toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: rgba(74,66,58,0.95);
+  color: #fff;
+  font-size: 13.5px;
+  padding: 12px 22px;
+  border-radius: 30px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: 200;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+@media (min-width: 480px) {
+  body { padding: 24px 0; }
+  .invitation { border-radius: 6px; }
+}

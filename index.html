@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>민준 ♡ 서연 결혼합니다</title>
+
+  <!-- Open Graph / KakaoTalk share preview -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="민준 ♡ 서연 결혼합니다" />
+  <meta property="og:description" content="2026년 10월 17일 토요일 오후 1시 · 그랜드홀" />
+  <meta property="og:image" content="assets/og-image.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Gowun+Batang:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!--
+    ============================================================
+    청첩장 (Wedding Invitation) — 배포용 / deployment build
+    ------------------------------------------------------------
+    NOTE: This is a template implementation. All content marked
+    with data-placeholder (names, dates, venue, accounts, photos)
+    should be replaced with the real values from the Claude Design
+    source file `청첩장_배포.dc.html`.
+    ============================================================
+  -->
+
+  <main class="invitation" id="top">
+
+    <!-- ================= HERO ================= -->
+    <section class="hero reveal">
+      <div class="hero__frame">
+        <div class="hero__photo" role="img" aria-label="신랑 신부 메인 사진"></div>
+        <div class="hero__overlay">
+          <p class="hero__label">WE ARE GETTING MARRIED</p>
+          <h1 class="hero__names">
+            <span data-placeholder="groom">김민준</span>
+            <span class="hero__amp">&amp;</span>
+            <span data-placeholder="bride">이서연</span>
+          </h1>
+          <p class="hero__date">2026. 10. 17. SAT PM 1:00</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= GREETING ================= -->
+    <section class="section greeting reveal">
+      <span class="section__deco">인사말</span>
+      <p class="greeting__poem">
+        서로가 마주보며 다져온 사랑을<br />
+        이제 함께 한 곳을 바라보며<br />
+        걸어갈 수 있는 큰 사랑으로 키우고자 합니다.
+      </p>
+      <p class="greeting__body">
+        저희 두 사람이 사랑과 믿음으로<br />
+        한 가정을 이루게 되었습니다.<br />
+        귀한 걸음 하시어 축복해 주시면<br />
+        더없는 기쁨으로 간직하겠습니다.
+      </p>
+      <div class="greeting__family">
+        <p>
+          <span data-placeholder="groom-father">김OO</span> ·
+          <span data-placeholder="groom-mother">박OO</span>
+          의 <span class="family__rel">아들</span>
+          <span data-placeholder="groom">민준</span>
+        </p>
+        <p>
+          <span data-placeholder="bride-father">이OO</span> ·
+          <span data-placeholder="bride-mother">최OO</span>
+          의 <span class="family__rel">딸</span>
+          <span data-placeholder="bride">서연</span>
+        </p>
+      </div>
+      <button class="btn-call" type="button" data-toggle="contact">
+        축하 연락하기
+      </button>
+      <div class="contact-panel" id="contact" hidden>
+        <div class="contact-col">
+          <p class="contact-col__title">신랑측</p>
+          <a class="contact-row" href="tel:01000000000">
+            <span>신랑 민준</span><span class="contact-ico">📞</span>
+          </a>
+          <a class="contact-row" href="tel:01000000000">
+            <span>아버지 김OO</span><span class="contact-ico">📞</span>
+          </a>
+          <a class="contact-row" href="tel:01000000000">
+            <span>어머니 박OO</span><span class="contact-ico">📞</span>
+          </a>
+        </div>
+        <div class="contact-col">
+          <p class="contact-col__title">신부측</p>
+          <a class="contact-row" href="tel:01000000000">
+            <span>신부 서연</span><span class="contact-ico">📞</span>
+          </a>
+          <a class="contact-row" href="tel:01000000000">
+            <span>아버지 이OO</span><span class="contact-ico">📞</span>
+          </a>
+          <a class="contact-row" href="tel:01000000000">
+            <span>어머니 최OO</span><span class="contact-ico">📞</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CALENDAR / D-DAY ================= -->
+    <section class="section calendar reveal">
+      <span class="section__deco">예식 안내</span>
+      <p class="calendar__date">2026년 10월 17일 토요일 오후 1시</p>
+      <p class="calendar__place">그랜드홀 3층 그랜드볼룸</p>
+
+      <div class="cal" aria-hidden="true">
+        <div class="cal__grid cal__grid--head">
+          <span class="cal--sun">일</span><span>월</span><span>화</span>
+          <span>수</span><span>목</span><span>금</span><span class="cal--sat">토</span>
+        </div>
+        <div class="cal__grid" id="cal-body"><!-- generated --></div>
+      </div>
+
+      <div class="dday" id="dday">
+        <p class="dday__text">
+          <span data-placeholder="groom">민준</span> ♥
+          <span data-placeholder="bride">서연</span>의 결혼식이
+          <strong id="dday-count">D-DAY</strong> 남았습니다.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= GALLERY ================= -->
+    <section class="section gallery reveal">
+      <span class="section__deco">갤러리</span>
+      <div class="gallery__grid" id="gallery">
+        <!-- Placeholder tiles; replace background with real photos -->
+      </div>
+    </section>
+
+    <!-- ================= LOCATION ================= -->
+    <section class="section location reveal">
+      <span class="section__deco">오시는 길</span>
+      <p class="location__name">그랜드홀</p>
+      <p class="location__addr">서울특별시 강남구 테헤란로 000</p>
+      <div class="map" id="map" role="img" aria-label="예식장 위치 지도">
+        <span class="map__pin">📍</span>
+        <span class="map__hint">지도 영역 (실제 배포 시 지도 API 연동)</span>
+      </div>
+      <ul class="location__ways">
+        <li><b>지하철</b> 2호선 OO역 3번 출구 도보 5분</li>
+        <li><b>버스</b> OO정류장 하차 (간선 000, 지선 0000)</li>
+        <li><b>자가용</b> 내비게이션 &ldquo;그랜드홀&rdquo; 검색 · 주차 2시간 무료</li>
+      </ul>
+    </section>
+
+    <!-- ================= ACCOUNTS ================= -->
+    <section class="section accounts reveal">
+      <span class="section__deco">마음 전하실 곳</span>
+      <p class="accounts__lead">
+        참석이 어려우신 분들을 위해<br />
+        계좌번호를 안내드립니다.
+      </p>
+
+      <details class="acc-group">
+        <summary>신랑측 계좌번호</summary>
+        <div class="acc-item">
+          <span>신랑 · OO은행 000-0000-0000</span>
+          <button class="btn-copy" type="button" data-copy="OO은행 000-0000-0000">복사</button>
+        </div>
+        <div class="acc-item">
+          <span>혼주 · OO은행 000-0000-0000</span>
+          <button class="btn-copy" type="button" data-copy="OO은행 000-0000-0000">복사</button>
+        </div>
+      </details>
+
+      <details class="acc-group">
+        <summary>신부측 계좌번호</summary>
+        <div class="acc-item">
+          <span>신부 · OO은행 000-0000-0000</span>
+          <button class="btn-copy" type="button" data-copy="OO은행 000-0000-0000">복사</button>
+        </div>
+        <div class="acc-item">
+          <span>혼주 · OO은행 000-0000-0000</span>
+          <button class="btn-copy" type="button" data-copy="OO은행 000-0000-0000">복사</button>
+        </div>
+      </details>
+    </section>
+
+    <!-- ================= RSVP ================= -->
+    <section class="section rsvp reveal">
+      <span class="section__deco">참석 의사 전달</span>
+      <p class="rsvp__lead">
+        축하해 주시는 모든 분들을 정성껏 모실 수 있도록<br />
+        참석 의사를 전달해 주시면 감사하겠습니다.
+      </p>
+      <form class="rsvp__form" id="rsvp-form">
+        <div class="rsvp__side">
+          <label><input type="radio" name="side" value="신랑측" required /> 신랑측</label>
+          <label><input type="radio" name="side" value="신부측" /> 신부측</label>
+        </div>
+        <input type="text" name="name" placeholder="성함" required />
+        <div class="rsvp__row">
+          <select name="attend" required>
+            <option value="" disabled selected>참석 여부</option>
+            <option value="참석">참석</option>
+            <option value="미참석">미참석</option>
+          </select>
+          <input type="number" name="count" min="1" max="20" placeholder="인원수" />
+        </div>
+        <button type="submit" class="btn-primary">전달하기</button>
+        <p class="rsvp__msg" id="rsvp-msg" hidden></p>
+      </form>
+    </section>
+
+    <!-- ================= GUESTBOOK ================= -->
+    <section class="section guestbook reveal">
+      <span class="section__deco">방명록</span>
+      <form class="gb__form" id="gb-form">
+        <input type="text" name="gbname" placeholder="이름" required maxlength="20" />
+        <textarea name="gbmsg" placeholder="따뜻한 축하의 말을 남겨주세요" required maxlength="200"></textarea>
+        <button type="submit" class="btn-primary">등록</button>
+      </form>
+      <ul class="gb__list" id="gb-list"></ul>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer reveal">
+      <p class="footer__names">
+        <span data-placeholder="groom">민준</span> ♡
+        <span data-placeholder="bride">서연</span>
+      </p>
+      <div class="footer__share">
+        <button class="btn-share" type="button" data-share="link">링크 복사</button>
+        <button class="btn-share" type="button" data-share="top">처음으로</button>
+      </div>
+      <p class="footer__credit">Thank you for celebrating with us.</p>
+    </footer>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
