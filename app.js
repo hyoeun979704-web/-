@@ -15,7 +15,7 @@
   // ===== 구글시트 연동 (Apps Script 웹앱) =====
   // 배포 후 웹앱 URL을 아래에 붙여넣으면 방명록·RSVP가 구글시트에 기록됩니다.
   // 비워두면 기존처럼 브라우저(localStorage)에만 저장됩니다.
-  var GAS_URL = "";
+  var GAS_URL = "https://script.google.com/macros/s/AKfycbwymMJNvNQSsgtgDVJ_acOwU6rAK0P6yQwCLoOpmhFg_BviG3MdnmfQ6JnA8hAgbpXX/exec";
   function jsonp(url, cb) {
     var name = "__gb_cb_" + Math.floor(Date.now() % 1e9) + "_" + (jsonp._i = (jsonp._i || 0) + 1);
     var s = document.createElement("script");
