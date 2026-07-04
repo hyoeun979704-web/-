@@ -197,13 +197,15 @@
     if (gbPage > pages - 1) gbPage = pages - 1;
     var pageEntries = entries.slice(gbPage * GB_PER, gbPage * GB_PER + GB_PER);
     var board = $("gbBoard");
+    var sc = (board.clientHeight || 340) / 480; // 슬롯 좌표는 480px 보드 기준 → 실제 높이에 맞춰 스케일
+    var mF = Math.max(12, Math.round(16 * sc)), nF = Math.max(11, Math.round(14 * sc));
     board.innerHTML = pageEntries.map(function (e, i) {
       var sl = gbSlots[i % gbSlots.length];
-      var css = "position:absolute; width:" + sl.w + "px; transform:rotate(" + sl.rot + "deg); text-align:" + sl.ta + "; top:" + sl.top + "px;";
-      css += sl.left !== undefined ? "left:" + sl.left + "px;" : "right:" + sl.right + "px;";
+      var css = "position:absolute; width:" + Math.round(sl.w * sc) + "px; transform:rotate(" + sl.rot + "deg); text-align:" + sl.ta + "; top:" + Math.round(sl.top * sc) + "px;";
+      css += sl.left !== undefined ? "left:" + Math.round(sl.left * sc) + "px;" : "right:" + Math.round(sl.right * sc) + "px;";
       return '<div style="' + css + '">' +
-        '<div style="font-family:\'Nanum Pen Script\',cursive; font-size:16px; line-height:1.12; color:#34402f;">' + esc(e.msg) + '</div>' +
-        '<div style="font-family:\'Nanum Pen Script\',cursive; font-size:14px; color:#6c7c61; margin-top:1px;">– ' + esc(e.name) + '</div></div>';
+        '<div style="font-family:\'Nanum Pen Script\',cursive; font-size:' + mF + 'px; line-height:1.12; color:#34402f;">' + esc(e.msg) + '</div>' +
+        '<div style="font-family:\'Nanum Pen Script\',cursive; font-size:' + nF + 'px; color:#6c7c61; margin-top:1px;">– ' + esc(e.name) + '</div></div>';
     }).join("");
     $("gbCount").textContent = entries.length;
     $("gbPager").hidden = pages <= 1;
@@ -231,10 +233,13 @@
     renderGb();
     toast("방명록이 등록되었어요");
   });
+  var gbImg = $("gbImg");
+  if (gbImg) gbImg.addEventListener("load", renderGb); // 이미지 비율 로드 후 글씨 좌표 재계산
+  window.addEventListener("resize", function () { if ($("gbBoard")) renderGb(); });
   renderGb();
 
   /* ---------- 하단 바 ---------- */
-  $("barContact").addEventListener("click", function () { toast("신랑측 010-7528-4143 · 신부측 010-7528-7504"); });
+  $("barContact").addEventListener("click", function () { toast("신랑측 010-7528-4000 · 신부측 010-7528-7504"); });
   $("barShare").addEventListener("click", function () {
     var SITE = "https://20260823.hyoeun.io";
     var data = { title: "류근창 · 김효은 결혼합니다", text: "2026년 8월 23일, 저희 두 사람의 결혼식에 초대합니다.", url: SITE };
@@ -316,57 +321,52 @@
       el.style.opacity = "0"; el.style.transform = init;
       el.style.transition = "opacity " + dur + " ease " + dl + ", transform " + dur + " " + ease + " " + dl;
     });
-    var revealActive = function () {
-      var cr = scroll.getBoundingClientRect();
-      var secs = Array.prototype.slice.call(scroll.children).filter(function (el) { return el.tagName === "SECTION"; });
-      secs.forEach(function (sec) {
-        var r = sec.getBoundingClientRect();
-        var settledAtTop = Math.abs(r.top - cr.top) < cr.height * 0.25;
-        var coversView = r.top <= cr.top + 4 && r.bottom >= cr.bottom - 4;
-        if (settledAtTop || coversView) {
-          sec.querySelectorAll("[data-reveal]").forEach(function (el) {
-            if (el.style.opacity === "1") return;
-            el.style.opacity = "1"; el.style.transform = el.getAttribute("data-reveal-to") || "none";
-          });
-        }
+    // 스냅은 CSS(scroll-snap-type)가 담당. 여기서는 등장 애니메이션만 처리한다.
+    function revealSection(sec) {
+      sec.querySelectorAll("[data-reveal]").forEach(function (el) {
+        el.style.opacity = "1";
+        el.style.transform = el.getAttribute("data-reveal-to") || "none";
       });
-    };
-    var _snapping = false;
-    var animTo = function (to) {
-      var from = scroll.scrollTop, dist = to - from;
-      if (Math.abs(dist) < 2) { revealActive(); return; }
-      _snapping = true;
-      var dur = 440, t0 = performance.now();
-      var ease = function (p) { return 1 - Math.pow(1 - p, 3); };
-      var step = function (now) {
-        var p = Math.min(1, (now - t0) / dur);
-        scroll.scrollTop = from + dist * ease(p);
-        if (p < 1) requestAnimationFrame(step);
-        else { _snapping = false; revealActive(); }
-      };
-      requestAnimationFrame(step);
-    };
-    var settle = function () {
-      if (_snapping) return;
-      var secs = Array.prototype.slice.call(scroll.children).filter(function (el) { return el.tagName === "SECTION" && getComputedStyle(el).display !== "none"; });
-      var y = scroll.scrollTop, vh = scroll.clientHeight, i = 0;
-      for (var k = 0; k < secs.length; k++) { if (secs[k].offsetTop <= y + 2) i = k; }
-      var cur = secs[i], curH = cur.offsetHeight, next = secs[i + 1];
-      var fits = curH <= vh + 40, progress = curH ? (y - cur.offsetTop) / curH : 0;
-      var target = y;
-      if (next && progress >= 0.7) target = next.offsetTop;
-      else if (fits) target = cur.offsetTop;
-      target = Math.min(target, scroll.scrollHeight - vh);
-      if (Math.abs(target - y) > 6) animTo(target);
-      else revealActive();
-    };
-    var _revTimer;
-    scroll.addEventListener("scroll", function () {
-      if (_snapping) return;
-      clearTimeout(_revTimer);
-      _revTimer = setTimeout(settle, 130);
-    }, { passive: true });
-    setTimeout(revealActive, 220);
+    }
+    var secs = Array.prototype.slice.call(scroll.children).filter(function (el) { return el.tagName === "SECTION"; });
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { revealSection(e.target); io.unobserve(e.target); }
+        });
+      }, { root: null, threshold: 0.18 });
+      secs.forEach(function (s) { io.observe(s); });
+    } else {
+      secs.forEach(revealSection);
+    }
   }
+  // 하단 고정탭: 평소 숨김 → (1) 10초 이상 스크롤 멈춤 또는 (2) 마지막 섹션에서 부드럽게 등장
+  (function () {
+    var bar = $("bottomBar");
+    if (!bar) return;
+    bar.style.transition = "transform .45s cubic-bezier(.22,.61,.36,1)";
+    function show() { bar.style.transform = "translateX(-50%) translateY(0)"; }
+    function hide() { bar.style.transform = "translateX(-50%) translateY(140%)"; }
+    hide();
+    var atLast = false, idle;
+    function armIdle() { clearTimeout(idle); idle = setTimeout(function () { if (!atLast) show(); }, 10000); }
+    var secs = Array.prototype.slice.call(scroll.children).filter(function (el) { return el.tagName === "SECTION"; });
+    var last = secs[secs.length - 1];
+    if (last && "IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          atLast = e.isIntersecting;
+          if (atLast) { clearTimeout(idle); show(); } else { hide(); armIdle(); }
+        });
+      }, { threshold: 0.4 }).observe(last);
+    }
+    window.addEventListener("scroll", function () {
+      if (atLast) return;      // 마지막 섹션에선 계속 표시
+      hide();                  // 스크롤 중엔 숨김
+      armIdle();               // 멈춘 뒤 10초 후 다시 표시
+    }, { passive: true });
+    armIdle();                 // 최초 진입 후 10초 유휴 시 표시
+  })();
+
   setTimeout(function () { setupScrollFx(); setupReveal(); }, 80);
 })();
