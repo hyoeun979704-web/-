@@ -12,6 +12,29 @@
   var $ = function (id) { return document.getElementById(id); };
   var screen = $("screen");
 
+  // ===== 구글시트 연동 (Apps Script 웹앱) =====
+  // 배포 후 웹앱 URL을 아래에 붙여넣으면 방명록·RSVP가 구글시트에 기록됩니다.
+  // 비워두면 기존처럼 브라우저(localStorage)에만 저장됩니다.
+  var GAS_URL = "";
+  function jsonp(url, cb) {
+    var name = "__gb_cb_" + Math.floor(Date.now() % 1e9) + "_" + (jsonp._i = (jsonp._i || 0) + 1);
+    var s = document.createElement("script");
+    var done = false;
+    window[name] = function (data) { done = true; try { cb(data); } catch (e) {} cleanup(); };
+    function cleanup() { delete window[name]; if (s.parentNode) s.parentNode.removeChild(s); }
+    s.onerror = cleanup;
+    setTimeout(function () { if (!done) cleanup(); }, 8000);
+    s.src = url + (url.indexOf("?") < 0 ? "?" : "&") + "callback=" + name + "&t=" + Date.now();
+    document.body.appendChild(s);
+  }
+  function gasPost(payload) {
+    if (!GAS_URL) return false;
+    try {
+      fetch(GAS_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(payload) }).catch(function () {});
+    } catch (e) {}
+    return true;
+  }
+
   /* ---------- 데이터 ---------- */
   var GAL = ['1mswGgI8UV_DG1ijpeT6ovAKf1coB2hbk','1j10zq50UguAM7pwclJcnJhG5B2wBnxJB','1Ud4cd7w_Trj3yLwrQGMyFB9pY2nIHad0','1BWIAXxvMfQAiYiRY6ngT_IWOvLmH3SkA','1Pv2StB-5JL7LBwbVCAO2uf4ss29iubHn','12ofEYDOAhOuTiAyr-Oj5FxKN5xZfAwgg','1CDQSNkR5Zb_89BL3G-yKBcpjytJg4LVr','1Wz_WRuXPKREvL8XyidKktfQ76p3ELzq4','1R3z9MzKtcG0Di2JsPaYzWUln8Ayy8cPy','1apSHqwukiU96jBhju0wz3umPAROw8nlL','1gO506_Nexvkao4Ihn4J45TcH2oqVyxE0','16vbKXGfThCx0gzeZPjFLFG3wfAlZ1lRo','1sjW5gUm0Y8cmh6BUPQ_8cb8c4HwEptc4','1QIpyDf1DiCHJc2uC11aawUeKhsPCSlaa','1v1vDesQFji8fcSTzlrAdkaMm6pYDQVmr','1cpC0U4miBZZ_l7g3UoMa4wanWFWvLvhJ','1zvN4u0Ic7GYBOh1OxZjVCu537RHPJEQu','1Jm2fnFpmhOGuJpQRDbwRkv7RTBsAo4sG','1oePO6fROU_v5iRELMndapH4_pW66nYtT','1AOD6evTQV4qSPJMe9aq9EdWgt4CNOct8'];
   var gH = [232, 168, 200, 150, 214, 176, 158, 224, 186];
@@ -43,19 +66,7 @@
     { top: 420, right: 22, rot: -3, w: 120, ta: 'right' }
   ];
   var GB_PER = 8;
-  var DEFAULT_ENTRIES = [
-    { name: '정세현', msg: '두 분 정말 잘 어울려요. 진심으로 축하해요!', date: '2026.06.20' },
-    { name: '이수민', msg: '드디어 가는구나 ㅠㅠ 행복하게 잘 살아!', date: '2026.06.22' },
-    { name: '박준영', msg: '결혼 축하한다! 늘 꽃길만 걷자', date: '2026.06.23' },
-    { name: '최가은', msg: '두 사람 너무 예뻐요. 행복하세요!', date: '2026.06.24' },
-    { name: '김도훈', msg: '평생 지금처럼 사랑하며 살길!', date: '2026.06.25' },
-    { name: '한지민', msg: '축하해요 언니! 너무 부러워요', date: '2026.06.25' },
-    { name: '오세훈', msg: '결혼 축하해 친구야! 행복하게 잘 살자', date: '2026.06.26' },
-    { name: '윤서연', msg: '백년해로하세요. 진심으로 축복합니다', date: '2026.06.26' },
-    { name: '장민재', msg: '두 분의 새 출발을 응원합니다!', date: '2026.06.27' },
-    { name: '신유나', msg: '예쁜 신부 효은이 진심으로 축하해', date: '2026.06.27' },
-    { name: '강태현', msg: '행복한 가정 이루길 바랄게', date: '2026.06.27' }
-  ];
+  var DEFAULT_ENTRIES = []; // 더미 데이터 없음
 
   /* ---------- 토스트 ---------- */
   var toastEl = $("toast"), toastTimer;
@@ -174,12 +185,14 @@
     var name = $("rsvpName").value.trim();
     if (!name) { toast("성함을 입력해 주세요"); return; }
     rsvp.name = name;
-    // 백엔드 미사용: 응답을 localStorage에 보관 (원할 경우 서버/구글시트로 확장 가능)
-    try {
-      var arr = JSON.parse(localStorage.getItem("rsvp_wedding_v1") || "[]");
-      arr.push({ side: rsvp.side, attending: rsvp.attending, meal: rsvp.meal, name: name, count: rsvp.count, at: new Date().toISOString() });
-      localStorage.setItem("rsvp_wedding_v1", JSON.stringify(arr));
-    } catch (e) {}
+    var payload = { type: "rsvp", side: rsvp.side, attending: rsvp.attending, meal: rsvp.meal, name: name, count: rsvp.count };
+    if (!gasPost(payload)) {
+      // GAS 미설정 시 localStorage 폴백
+      try {
+        var arr = JSON.parse(localStorage.getItem("rsvp_wedding_v1") || "[]");
+        arr.push(payload); localStorage.setItem("rsvp_wedding_v1", JSON.stringify(arr));
+      } catch (e) {}
+    }
     $("rsvpForm").hidden = true;
     $("rsvpDone").hidden = false;
     toast("참석 의사가 전달되었어요");
@@ -226,7 +239,7 @@
     var dt = new Date();
     var ds = dt.getFullYear() + "." + pad2(dt.getMonth() + 1) + "." + pad2(dt.getDate());
     entries.push({ name: n, msg: m, date: ds });
-    saveEntries();
+    if (!gasPost({ type: "guestbook", name: n, msg: m, date: ds })) saveEntries();
     gbPage = Math.floor((entries.length - 1) / GB_PER);
     $("gbName").value = ""; $("gbMsg").value = "";
     gbModal.hidden = true;
@@ -237,6 +250,8 @@
   if (gbImg) gbImg.addEventListener("load", renderGb); // 이미지 비율 로드 후 글씨 좌표 재계산
   window.addEventListener("resize", function () { if ($("gbBoard")) renderGb(); });
   renderGb();
+  // 구글시트에서 방명록 불러오기
+  if (GAS_URL) jsonp(GAS_URL, function (list) { if (list && list.length !== undefined) { entries = list; gbPage = 0; renderGb(); } });
 
   /* ---------- 하단 바 ---------- */
   $("barContact").addEventListener("click", function () { toast("신랑측 010-7528-4000 · 신부측 010-7528-7504"); });
