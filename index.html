@@ -17,7 +17,10 @@
   * { box-sizing: border-box; }
   body { margin: 0; }
   ::-webkit-scrollbar { width: 0; height: 0; }
-  #invscroll { scroll-snap-type: none; }
+  /* 네이티브 CSS 스크롤 스냅 — iOS 사파리 포함 모든 모바일에서 섹션 단위로 붙음.
+     화면보다 큰 섹션은 JS(updateSnap)가 scroll-snap-align:none 으로 빼서 자유 스크롤. */
+  #invscroll { scroll-snap-type: y proximity; }
+  #invscroll > section { scroll-snap-align: start; }
   [hidden] { display: none !important; }
   @keyframes cueBounce { 0%,100%{ transform: translateY(0); opacity:.5 } 50%{ transform: translateY(7px); opacity:1 } }
   @keyframes pulseRing { 0%{ transform: scale(.85); opacity:.55 } 70%{ transform: scale(1.5); opacity:0 } 100%{ opacity:0 } }
@@ -77,13 +80,13 @@
       </section>
 
       <!-- ===== 인사말 ===== -->
-      <section style="min-height:100%; display:flex; flex-direction:column; justify-content:center; background:#f6f3ec; padding:62px 32px; position:relative; overflow:hidden;">
-        <div data-reveal style="text-align:var(--align,center); margin-bottom:30px;">
-          <div style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:13px; letter-spacing:.34em; text-transform:uppercase; color:var(--c-accent,#7a9277); margin-bottom:12px;">Invitation</div>
-          <h2 style="font-family:var(--f-kr,'Gowun Batang',serif); font-weight:500; font-size:24px; color:var(--c-deep,#36443d); margin:0;">초대합니다</h2>
-          <div style="display:flex; align-items:center; justify-content:center; gap:9px; margin-top:16px;"><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent,#2f9e5f)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C6.5 17 4.5 10.5 12 3c7.5 7.5 5.5 14 0 18Z"></path><path d="M12 6.5V19"></path><path d="M12 12l2.6-2.6M12 14.6l-2.4-2.4"></path></svg><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span></div>
+      <section style="min-height:100%; display:flex; flex-direction:column; justify-content:center; background:#f6f3ec; padding:46px 32px; position:relative; overflow:hidden;">
+        <div data-reveal style="text-align:var(--align,center); margin-bottom:18px;">
+          <div style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:13px; letter-spacing:.34em; text-transform:uppercase; color:var(--c-accent,#7a9277); margin-bottom:6px;">Invitation</div>
+          <h2 style="font-family:var(--f-kr,'Gowun Batang',serif); font-weight:500; font-size:21px; color:var(--c-deep,#36443d); margin:0;">초대합니다</h2>
+          <div style="display:flex; align-items:center; justify-content:center; gap:9px; margin-top:8px;"><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent,#2f9e5f)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C6.5 17 4.5 10.5 12 3c7.5 7.5 5.5 14 0 18Z"></path><path d="M12 6.5V19"></path><path d="M12 12l2.6-2.6M12 14.6l-2.4-2.4"></path></svg><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span></div>
         </div>
-        <p data-reveal style="font-family:var(--f-kr,'Gowun Batang',serif); text-align:center; font-size:17px; line-height:2.15; color:var(--c-ink,#4a554d); margin:0 0 40px; letter-spacing:.01em; text-wrap:pretty;">
+        <p data-reveal style="font-family:var(--f-kr,'Gowun Batang',serif); text-align:center; font-size:17px; line-height:2.1; color:var(--c-ink,#4a554d); margin:0 0 34px; letter-spacing:.01em; text-wrap:pretty;">
           여름의 푸른 빛이<br>가장 짙어질 무렵,<br><br>오랜 시간 서로의 계절을<br>함께 걸어온 두 사람이<br>이제 같은 곳을 바라보며<br>새로운 길을 시작합니다.<br><br>귀한 걸음으로 축복해 주시면<br>더없는 기쁨으로 간직하겠습니다.
         </p>
         <div data-reveal style="display:flex; flex-direction:column; align-items:center; gap:14px;">
@@ -101,11 +104,11 @@
       </section>
 
       <!-- ===== 신랑·신부 소개 ===== -->
-      <section style="min-height:100%; display:flex; flex-direction:column; justify-content:center; background:#f6f3ec; padding:62px 28px;">
-        <div data-reveal style="text-align:var(--align,center); margin-bottom:34px;">
-          <div style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:13px; letter-spacing:.34em; text-transform:uppercase; color:var(--c-accent,#7a9277); margin-bottom:12px;">The Couple</div>
-          <h2 style="font-family:var(--f-kr,'Gowun Batang',serif); font-weight:500; font-size:24px; color:var(--c-deep,#36443d); margin:0;">신랑 &amp; 신부</h2>
-          <div style="display:flex; align-items:center; justify-content:center; gap:9px; margin-top:16px;"><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent,#2f9e5f)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C6.5 17 4.5 10.5 12 3c7.5 7.5 5.5 14 0 18Z"></path><path d="M12 6.5V19"></path><path d="M12 12l2.6-2.6M12 14.6l-2.4-2.4"></path></svg><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span></div>
+      <section style="min-height:100%; display:flex; flex-direction:column; justify-content:center; background:#f6f3ec; padding:46px 28px;">
+        <div data-reveal style="text-align:var(--align,center); margin-bottom:20px;">
+          <div style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:13px; letter-spacing:.34em; text-transform:uppercase; color:var(--c-accent,#7a9277); margin-bottom:6px;">The Couple</div>
+          <h2 style="font-family:var(--f-kr,'Gowun Batang',serif); font-weight:500; font-size:21px; color:var(--c-deep,#36443d); margin:0;">신랑 &amp; 신부</h2>
+          <div style="display:flex; align-items:center; justify-content:center; gap:9px; margin-top:8px;"><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent,#2f9e5f)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C6.5 17 4.5 10.5 12 3c7.5 7.5 5.5 14 0 18Z"></path><path d="M12 6.5V19"></path><path d="M12 12l2.6-2.6M12 14.6l-2.4-2.4"></path></svg><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span></div>
         </div>
         <div data-reveal style="border-radius:9px; overflow:hidden; box-shadow:0 10px 30px -18px rgba(40,55,45,.5); margin-bottom:22px;">
           <img src="https://lh3.googleusercontent.com/d/1rzuOg5e8L5MOCc_r9_g5XE16R3dM5-Sp=w1200" alt="신랑 신부" style="display:block; width:100%; aspect-ratio:4/3; object-fit:cover;">
@@ -126,10 +129,10 @@
       </section>
 
       <!-- ===== 캘린더 / D-day ===== -->
-      <section style="min-height:100%; display:flex; flex-direction:column; justify-content:center; background:#f6f3ec; padding:62px 30px;">
-        <div data-reveal style="text-align:var(--align,center); margin-bottom:26px;">
-          <div style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:13px; letter-spacing:.34em; text-transform:uppercase; color:var(--c-accent,#7a9277); margin-bottom:12px;">The Date</div>
-          <h2 style="font-family:var(--f-kr,'Gowun Batang',serif); font-weight:500; font-size:24px; color:var(--c-deep,#36443d); margin:0;">예식 날짜</h2><div style="display:flex; align-items:center; justify-content:center; gap:9px; margin-top:14px;"><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent,#2f9e5f)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C6.5 17 4.5 10.5 12 3c7.5 7.5 5.5 14 0 18Z"></path><path d="M12 6.5V19"></path><path d="M12 12l2.6-2.6M12 14.6l-2.4-2.4"></path></svg><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span></div>
+      <section style="min-height:100%; display:flex; flex-direction:column; justify-content:center; background:#f6f3ec; padding:46px 30px;">
+        <div data-reveal style="text-align:var(--align,center); margin-bottom:16px;">
+          <div style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:13px; letter-spacing:.34em; text-transform:uppercase; color:var(--c-accent,#7a9277); margin-bottom:6px;">The Date</div>
+          <h2 style="font-family:var(--f-kr,'Gowun Batang',serif); font-weight:500; font-size:21px; color:var(--c-deep,#36443d); margin:0;">예식 날짜</h2><div style="display:flex; align-items:center; justify-content:center; gap:9px; margin-top:8px;"><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent,#2f9e5f)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C6.5 17 4.5 10.5 12 3c7.5 7.5 5.5 14 0 18Z"></path><path d="M12 6.5V19"></path><path d="M12 12l2.6-2.6M12 14.6l-2.4-2.4"></path></svg><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span></div>
         </div>
         <div data-reveal style="background:var(--c-paper,#fff); border-radius:9px; padding:24px 20px; box-shadow:0 8px 24px -16px rgba(40,55,45,.4);">
           <div style="text-align:center; font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:17px; letter-spacing:.2em; color:var(--c-deep,#36443d); margin-bottom:18px;">AUGUST 2026</div>
@@ -157,20 +160,20 @@
       </section>
 
       <!-- ===== 갤러리 ===== -->
-      <section style="min-height:100%; display:flex; flex-direction:column; justify-content:center; background:#f6f3ec; padding:62px 24px;">
+      <section style="min-height:100%; display:flex; flex-direction:column; justify-content:center; background:#f6f3ec; padding:46px 24px;">
         <div data-reveal style="text-align:var(--align,center); margin-bottom:14px;">
-          <div style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:13px; letter-spacing:.34em; text-transform:uppercase; color:var(--c-accent,#7a9277); margin-bottom:12px;">Gallery</div>
-          <h2 style="font-family:var(--f-kr,'Gowun Batang',serif); font-weight:500; font-size:24px; color:var(--c-deep,#36443d); margin:0;">우리의 순간들</h2><div style="display:flex; align-items:center; justify-content:center; gap:9px; margin-top:14px;"><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent,#2f9e5f)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C6.5 17 4.5 10.5 12 3c7.5 7.5 5.5 14 0 18Z"></path><path d="M12 6.5V19"></path><path d="M12 12l2.6-2.6M12 14.6l-2.4-2.4"></path></svg><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span></div>
+          <div style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:13px; letter-spacing:.34em; text-transform:uppercase; color:var(--c-accent,#7a9277); margin-bottom:6px;">Gallery</div>
+          <h2 style="font-family:var(--f-kr,'Gowun Batang',serif); font-weight:500; font-size:21px; color:var(--c-deep,#36443d); margin:0;">우리의 순간들</h2><div style="display:flex; align-items:center; justify-content:center; gap:9px; margin-top:8px;"><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent,#2f9e5f)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C6.5 17 4.5 10.5 12 3c7.5 7.5 5.5 14 0 18Z"></path><path d="M12 6.5V19"></path><path d="M12 12l2.6-2.6M12 14.6l-2.4-2.4"></path></svg><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span></div>
         </div>
         <p data-reveal style="text-align:center; font-size:11.5px; color:var(--c-ink,#4a554d); opacity:.75; margin:0 0 22px;">사진을 누르면 크게 볼 수 있어요</p>
         <div id="gallery" style="display:grid; grid-auto-flow:column; grid-template-rows:repeat(2, auto); grid-auto-columns:132px; gap:8px; overflow-x:auto; padding:2px 24px 12px; margin:0 -24px; -webkit-overflow-scrolling:touch; scroll-snap-type:x proximity;"></div>
       </section>
 
       <!-- ===== 오시는 길 ===== -->
-      <section style="min-height:100%; display:flex; flex-direction:column; justify-content:center; background:#f6f3ec; padding:62px 28px;">
-        <div data-reveal style="text-align:var(--align,center); margin-bottom:26px;">
-          <div style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:13px; letter-spacing:.34em; text-transform:uppercase; color:var(--c-accent,#7a9277); margin-bottom:12px;">Location</div>
-          <h2 style="font-family:var(--f-kr,'Gowun Batang',serif); font-weight:500; font-size:24px; color:var(--c-deep,#36443d); margin:0;">오시는 길</h2><div style="display:flex; align-items:center; justify-content:center; gap:9px; margin-top:14px;"><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent,#2f9e5f)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C6.5 17 4.5 10.5 12 3c7.5 7.5 5.5 14 0 18Z"></path><path d="M12 6.5V19"></path><path d="M12 12l2.6-2.6M12 14.6l-2.4-2.4"></path></svg><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span></div>
+      <section style="min-height:100%; display:flex; flex-direction:column; justify-content:center; background:#f6f3ec; padding:46px 28px;">
+        <div data-reveal style="text-align:var(--align,center); margin-bottom:16px;">
+          <div style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:13px; letter-spacing:.34em; text-transform:uppercase; color:var(--c-accent,#7a9277); margin-bottom:6px;">Location</div>
+          <h2 style="font-family:var(--f-kr,'Gowun Batang',serif); font-weight:500; font-size:21px; color:var(--c-deep,#36443d); margin:0;">오시는 길</h2><div style="display:flex; align-items:center; justify-content:center; gap:9px; margin-top:8px;"><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent,#2f9e5f)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C6.5 17 4.5 10.5 12 3c7.5 7.5 5.5 14 0 18Z"></path><path d="M12 6.5V19"></path><path d="M12 12l2.6-2.6M12 14.6l-2.4-2.4"></path></svg><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span></div>
         </div>
         <div data-reveal style="text-align:center; margin-bottom:18px;">
           <div style="font-family:var(--f-kr,'Gowun Batang',serif); font-size:18px; color:var(--c-deep,#36443d);">천안 T웨딩 그레이스홀</div>
@@ -197,10 +200,10 @@
       </section>
 
       <!-- ===== 마음 전하실 곳 ===== -->
-      <section style="min-height:100%; display:flex; flex-direction:column; justify-content:center; background:#f6f3ec; padding:62px 28px;">
+      <section style="min-height:100%; display:flex; flex-direction:column; justify-content:center; background:#f6f3ec; padding:46px 28px;">
         <div data-reveal style="text-align:var(--align,center); margin-bottom:14px;">
-          <div style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:13px; letter-spacing:.34em; text-transform:uppercase; color:var(--c-accent,#7a9277); margin-bottom:12px;">With Heart</div>
-          <h2 style="font-family:var(--f-kr,'Gowun Batang',serif); font-weight:500; font-size:24px; color:var(--c-deep,#36443d); margin:0;">마음 전하실 곳</h2><div style="display:flex; align-items:center; justify-content:center; gap:9px; margin-top:14px;"><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent,#2f9e5f)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C6.5 17 4.5 10.5 12 3c7.5 7.5 5.5 14 0 18Z"></path><path d="M12 6.5V19"></path><path d="M12 12l2.6-2.6M12 14.6l-2.4-2.4"></path></svg><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span></div>
+          <div style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:13px; letter-spacing:.34em; text-transform:uppercase; color:var(--c-accent,#7a9277); margin-bottom:6px;">With Heart</div>
+          <h2 style="font-family:var(--f-kr,'Gowun Batang',serif); font-weight:500; font-size:21px; color:var(--c-deep,#36443d); margin:0;">마음 전하실 곳</h2><div style="display:flex; align-items:center; justify-content:center; gap:9px; margin-top:8px;"><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent,#2f9e5f)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C6.5 17 4.5 10.5 12 3c7.5 7.5 5.5 14 0 18Z"></path><path d="M12 6.5V19"></path><path d="M12 12l2.6-2.6M12 14.6l-2.4-2.4"></path></svg><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span></div>
         </div>
         <p data-reveal style="text-align:center; font-size:12.5px; line-height:1.7; color:var(--c-ink,#4a554d); margin:0 0 24px;">참석이 어려우신 분들을 위해<br>계좌번호를 안내드립니다.</p>
         <div data-reveal style="display:flex; flex-direction:column; gap:12px;">
@@ -216,10 +219,10 @@
       </section>
 
       <!-- ===== RSVP ===== -->
-      <section style="min-height:100%; display:flex; flex-direction:column; justify-content:center; background:#f6f3ec; padding:62px 30px;">
+      <section style="min-height:100%; display:flex; flex-direction:column; justify-content:center; background:#f6f3ec; padding:46px 30px;">
         <div data-reveal style="text-align:var(--align,center); margin-bottom:14px;">
-          <div style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:13px; letter-spacing:.34em; text-transform:uppercase; color:var(--c-accent,#7a9277); margin-bottom:12px;">R.S.V.P</div>
-          <h2 style="font-family:var(--f-kr,'Gowun Batang',serif); font-weight:500; font-size:24px; color:var(--c-deep,#36443d); margin:0;">참석 의사 전달</h2><div style="display:flex; align-items:center; justify-content:center; gap:9px; margin-top:14px;"><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent,#2f9e5f)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C6.5 17 4.5 10.5 12 3c7.5 7.5 5.5 14 0 18Z"></path><path d="M12 6.5V19"></path><path d="M12 12l2.6-2.6M12 14.6l-2.4-2.4"></path></svg><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span></div>
+          <div style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:13px; letter-spacing:.34em; text-transform:uppercase; color:var(--c-accent,#7a9277); margin-bottom:6px;">R.S.V.P</div>
+          <h2 style="font-family:var(--f-kr,'Gowun Batang',serif); font-weight:500; font-size:21px; color:var(--c-deep,#36443d); margin:0;">참석 의사 전달</h2><div style="display:flex; align-items:center; justify-content:center; gap:9px; margin-top:8px;"><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent,#2f9e5f)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C6.5 17 4.5 10.5 12 3c7.5 7.5 5.5 14 0 18Z"></path><path d="M12 6.5V19"></path><path d="M12 12l2.6-2.6M12 14.6l-2.4-2.4"></path></svg><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span></div>
         </div>
         <p data-reveal style="text-align:center; font-size:12.5px; line-height:1.7; color:var(--c-ink,#4a554d); margin:0 0 26px;">정성껏 준비하기 위해<br>참석 여부를 알려주시면 감사하겠습니다.</p>
         <div id="rsvpDone" hidden style="text-align:center; padding:34px 20px; background:var(--c-soft,#dde6dc); border-radius:9px;">
@@ -267,14 +270,14 @@
       </section>
 
       <!-- ===== 방명록 ===== -->
-      <section style="min-height:100%; display:flex; flex-direction:column; justify-content:center; background:#f6f3ec; padding:70px 26px;">
+      <section style="min-height:100%; display:flex; flex-direction:column; justify-content:center; background:#f6f3ec; padding:46px 26px;">
         <div data-reveal style="text-align:var(--align,center); margin-bottom:24px;">
-          <div style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:13px; letter-spacing:.34em; text-transform:uppercase; color:var(--c-accent,#7a9277); margin-bottom:12px;">Guestbook</div>
-          <h2 style="font-family:var(--f-kr,'Gowun Batang',serif); font-weight:500; font-size:24px; color:var(--c-deep,#36443d); margin:0;">축하 한마디</h2><div style="display:flex; align-items:center; justify-content:center; gap:9px; margin-top:14px;"><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent,#2f9e5f)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C6.5 17 4.5 10.5 12 3c7.5 7.5 5.5 14 0 18Z"></path><path d="M12 6.5V19"></path><path d="M12 12l2.6-2.6M12 14.6l-2.4-2.4"></path></svg><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span></div>
+          <div style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:13px; letter-spacing:.34em; text-transform:uppercase; color:var(--c-accent,#7a9277); margin-bottom:6px;">Guestbook</div>
+          <h2 style="font-family:var(--f-kr,'Gowun Batang',serif); font-weight:500; font-size:21px; color:var(--c-deep,#36443d); margin:0;">축하 한마디</h2><div style="display:flex; align-items:center; justify-content:center; gap:9px; margin-top:8px;"><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent,#2f9e5f)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C6.5 17 4.5 10.5 12 3c7.5 7.5 5.5 14 0 18Z"></path><path d="M12 6.5V19"></path><path d="M12 12l2.6-2.6M12 14.6l-2.4-2.4"></path></svg><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span></div>
         </div>
         <div data-reveal style="text-align:center; font-size:11.5px; color:var(--c-ink,#4a554d); opacity:.75; margin:-10px 0 18px;">남겨주신 한마디가 <span id="gbCount" style="color:var(--c-accent,#2f9e5f); font-weight:600;">0</span>개 모였어요</div>
-        <div data-reveal style="position:relative; margin-bottom:20px; box-shadow:0 14px 32px -18px rgba(28,71,51,.5); background:#fbf7ec; border-radius:8px; min-height:480px;">
-          <img src="https://lh3.googleusercontent.com/d/1d8DTrn1e1Z0Q5IqJGQxYq7F-xcFn2dWh=w1000" alt="방명록" style="display:block; width:100%;" onerror="this.style.display='none'">
+        <div data-reveal style="position:relative; margin-bottom:16px; box-shadow:0 14px 32px -18px rgba(28,71,51,.5); background:#fbf7ec; border-radius:8px; overflow:hidden;">
+          <img id="gbImg" src="https://lh3.googleusercontent.com/d/1d8DTrn1e1Z0Q5IqJGQxYq7F-xcFn2dWh=w1000" alt="방명록" style="display:block; width:100%; height:auto;" onerror="this.style.display='none'">
           <div id="gbBoard" style="position:absolute; inset:0;"></div>
         </div>
         <div id="gbPager" hidden style="display:flex; align-items:center; justify-content:center; gap:16px; margin-bottom:20px;">
