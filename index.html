@@ -44,7 +44,10 @@
 
   <div id="screen" style="position:relative; width:100%; max-width:480px; height:100dvh; overflow:hidden; background:var(--c-bg,#f4f1ea); box-shadow:0 0 60px rgba(20,40,28,.18); --c-bg:#eaf3ea; --c-paper:#ffffff; --c-cream:#e2f2e2; --c-deep:#1c4733; --c-accent:#2f9e5f; --c-soft:#c6eccf; --c-line:rgba(28,71,51,.18); --c-ink:#2c4a3a; --f-disp:'Marcellus',serif; --f-kr:'Gowun Batang',serif; --f-body:'Noto Sans KR',sans-serif; --align:center;">
 
-    <audio id="bgm" loop preload="auto" src="https://drive.google.com/uc?export=download&id=1CvDtnBqQvxfju5xZDW-bJQG2Vm-kQZB6"></audio>
+    <audio id="bgm" loop preload="auto">
+      <source src="assets/bgm.mp3" type="audio/mpeg">
+      <source src="https://drive.google.com/uc?export=download&id=1CvDtnBqQvxfju5xZDW-bJQG2Vm-kQZB6" type="audio/mpeg">
+    </audio>
     <button id="musicBtn" aria-label="배경음악" style="position:absolute; top:13px; right:13px; z-index:45; width:33px; height:33px; border-radius:50%; border:none; background:rgba(20,40,28,.4); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; cursor:pointer; color:#fff; box-shadow:0 2px 8px rgba(20,40,28,.25);"></button>
 
     <div id="invscroll" style="height:100%; overflow-y:auto; -webkit-overflow-scrolling:touch; font-family:var(--f-body,'Noto Sans KR',sans-serif); color:var(--c-ink,#4a554d);">
