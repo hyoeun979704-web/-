@@ -1,246 +1,353 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>민준 ♡ 서연 결혼합니다</title>
-
-  <!-- Open Graph / KakaoTalk share preview -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="민준 ♡ 서연 결혼합니다" />
-  <meta property="og:description" content="2026년 10월 17일 토요일 오후 1시 · 그랜드홀" />
-  <meta property="og:image" content="assets/og-image.jpg" />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Gowun+Batang:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap"
-    rel="stylesheet"
-  />
-  <link rel="stylesheet" href="css/style.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>류근창 ♥ 김효은 결혼합니다</title>
+<meta name="description" content="2026년 8월 23일 일요일 오후 12시 50분 · 천안 T웨딩 그레이스홀">
+<meta property="og:type" content="website">
+<meta property="og:title" content="류근창 · 김효은 결혼합니다">
+<meta property="og:description" content="2026년 8월 23일, 저희 두 사람의 결혼식에 초대합니다.">
+<meta property="og:image" content="https://lh3.googleusercontent.com/d/1HU-cmM_zGHq_GwoNxlMlmOtzhJCgrHWK=w1200">
+<meta property="og:url" content="https://20260823.hyoeun.io">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Marcellus&family=Jost:wght@300;400;500&family=Gowun+Batang:wght@400;700&family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  ::-webkit-scrollbar { width: 0; height: 0; }
+  #invscroll { scroll-snap-type: none; }
+  [hidden] { display: none !important; }
+  @keyframes cueBounce { 0%,100%{ transform: translateY(0); opacity:.5 } 50%{ transform: translateY(7px); opacity:1 } }
+  @keyframes pulseRing { 0%{ transform: scale(.85); opacity:.55 } 70%{ transform: scale(1.5); opacity:0 } 100%{ opacity:0 } }
+  @keyframes toastIn { from{ opacity:0; transform: translate(-50%, 12px) } to{ opacity:1; transform: translate(-50%,0) } }
+  @keyframes lbIn { from{ opacity:0 } to{ opacity:1 } }
+  @keyframes leafFall { 0%{ transform: translate(0,-34px) rotate(0); opacity:0 } 9%{ opacity:.78 } 90%{ opacity:.5 } 100%{ transform: translate(38px,880px) rotate(280deg); opacity:0 } }
+  @keyframes kenburns { 0%{ transform: scale(1.05) } 100%{ transform: scale(1.15) } }
+  @keyframes flrMove { 0%{ transform: translateX(-110%) } 100%{ transform: translateX(110%) } }
+  @keyframes flrHold { 0%{ opacity:1 } 42%{ opacity:1 } 72%{ opacity:0 } 100%{ opacity:0 } }
+  @keyframes flrFade { 0%{ opacity:0 } 16%{ opacity:1 } 84%{ opacity:1 } 100%{ opacity:0 } }
+  @keyframes flrVeil { 0%{ opacity:0 } 48%{ opacity:.92 } 58%{ opacity:.92 } 100%{ opacity:0 } }
+  @keyframes flrMono { 0%{ opacity:1 } 52%{ opacity:1 } 78%{ opacity:0 } 100%{ opacity:0 } }
+  /* keep centered content clear of the fixed bottom bar (~48px) */
+  #invscroll > section:not(:first-child):not(:last-child) { padding-bottom: 92px !important; }
+  .seg { flex:1; padding:12px; border-radius:6px; cursor:pointer; font-size:13px; transition:all .2s ease; font-family:inherit; border:1px solid var(--c-line,rgba(54,68,61,.16)); background:transparent; color:var(--c-deep,#36443d); }
+  .seg.on { border:1px solid var(--c-accent,#7a9277); background:var(--c-accent,#7a9277); color:#fff; }
+  .mapfallback { display:none; }
+  .mapfail .mapfallback { display:flex; }
+  .mapfail img { display:none; }
+</style>
 </head>
 <body>
-  <!--
-    ============================================================
-    청첩장 (Wedding Invitation) — 배포용 / deployment build
-    ------------------------------------------------------------
-    NOTE: This is a template implementation. All content marked
-    with data-placeholder (names, dates, venue, accounts, photos)
-    should be replaced with the real values from the Claude Design
-    source file `청첩장_배포.dc.html`.
-    ============================================================
-  -->
+<div id="page" style="min-height:100dvh; background:linear-gradient(170deg,#e3f0e2,#cfe6cf); display:flex; justify-content:center; align-items:stretch; font-family:'Noto Sans KR',sans-serif;">
 
-  <main class="invitation" id="top">
+  <div id="screen" style="position:relative; width:100%; max-width:480px; height:100dvh; overflow:hidden; background:var(--c-bg,#f4f1ea); box-shadow:0 0 60px rgba(20,40,28,.18); --c-bg:#eaf3ea; --c-paper:#ffffff; --c-cream:#e2f2e2; --c-deep:#1c4733; --c-accent:#2f9e5f; --c-soft:#c6eccf; --c-line:rgba(28,71,51,.18); --c-ink:#2c4a3a; --f-disp:'Marcellus',serif; --f-kr:'Gowun Batang',serif; --f-body:'Noto Sans KR',sans-serif; --align:center;">
 
-    <!-- ================= HERO ================= -->
-    <section class="hero reveal">
-      <div class="hero__frame">
-        <div class="hero__photo" role="img" aria-label="신랑 신부 메인 사진"></div>
-        <div class="hero__overlay">
-          <p class="hero__label">WE ARE GETTING MARRIED</p>
-          <h1 class="hero__names">
-            <span data-placeholder="groom">김민준</span>
-            <span class="hero__amp">&amp;</span>
-            <span data-placeholder="bride">이서연</span>
-          </h1>
-          <p class="hero__date">2026. 10. 17. SAT PM 1:00</p>
+    <audio id="bgm" loop preload="auto" src="https://drive.google.com/uc?export=download&id=1CvDtnBqQvxfju5xZDW-bJQG2Vm-kQZB6"></audio>
+    <button id="musicBtn" aria-label="배경음악" style="position:absolute; top:13px; right:13px; z-index:45; width:33px; height:33px; border-radius:50%; border:none; background:rgba(20,40,28,.4); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; cursor:pointer; color:#fff; box-shadow:0 2px 8px rgba(20,40,28,.25);"></button>
+
+    <div id="invscroll" style="height:100%; overflow-y:auto; -webkit-overflow-scrolling:touch; font-family:var(--f-body,'Noto Sans KR',sans-serif); color:var(--c-ink,#4a554d);">
+
+      <!-- ===== COVER ===== -->
+      <section style="position:relative; min-height:100%; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; overflow:hidden;">
+        <img src="https://lh3.googleusercontent.com/d/1HU-cmM_zGHq_GwoNxlMlmOtzhJCgrHWK=w1600" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; animation:kenburns 22s ease-in-out infinite alternate; transform-origin:center;">
+        <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(40,55,45,.34) 0%, rgba(40,55,45,.12) 32%, rgba(40,55,45,.20) 62%, rgba(30,42,33,.66) 100%); pointer-events:none;"></div>
+        <div style="position:absolute; inset:0; z-index:2; overflow:hidden; pointer-events:none;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="rgba(255,255,255,.45)" style="position:absolute; top:0; left:16%; animation:leafFall 10s linear infinite 1.5s;"><path d="M12 2C6 8 5 15 12 22 19 15 18 8 12 2Z"></path></svg>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="rgba(255,255,255,.4)" style="position:absolute; top:0; left:38%; animation:leafFall 13s linear infinite 4s;"><path d="M12 2C6 8 5 15 12 22 19 15 18 8 12 2Z"></path></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="rgba(255,255,255,.42)" style="position:absolute; top:0; left:60%; animation:leafFall 11.5s linear infinite .5s;"><path d="M12 2C6 8 5 15 12 22 19 15 18 8 12 2Z"></path></svg>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="rgba(255,255,255,.4)" style="position:absolute; top:0; left:82%; animation:leafFall 12s linear infinite 2.8s;"><path d="M12 2C6 8 5 15 12 22 19 15 18 8 12 2Z"></path></svg>
         </div>
-      </div>
-    </section>
+        <div style="position:absolute; inset:18px; border:1px solid rgba(255,255,255,.4); pointer-events:none;"></div>
+        <div style="position:relative; z-index:3; pointer-events:none; padding:0 30px;">
+          <div style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-style:italic; font-size:19px; letter-spacing:.06em; color:#fff; opacity:.92; margin-bottom:18px;">We're getting married</div>
+          <div style="font-family:var(--f-kr,'Gowun Batang',serif); font-size:40px; line-height:1.18; color:#fff; font-weight:700; text-shadow:0 2px 18px rgba(20,30,22,.4);">류근창<span style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:30px; vertical-align:middle; margin:0 12px; opacity:.85; font-weight:400;">&amp;</span>김효은</div>
+          <div style="width:46px; height:1px; background:rgba(255,255,255,.7); margin:24px auto;"></div>
+          <div style="color:#fff; font-size:15px; letter-spacing:.28em; font-weight:300;">2026 · 08 · 23 · SUN</div>
+          <div style="color:rgba(255,255,255,.88); font-size:13px; margin-top:8px; letter-spacing:.04em;">오후 12시 50분 · 천안 T웨딩 그레이스홀</div>
+        </div>
+        <div style="position:absolute; bottom:34px; left:50%; transform:translateX(-50%); z-index:3; display:flex; flex-direction:column; align-items:center; gap:6px; pointer-events:none;">
+          <span style="font-size:10px; letter-spacing:.3em; color:rgba(255,255,255,.8);">SCROLL</span>
+          <svg width="16" height="22" viewBox="0 0 16 22" style="animation:cueBounce 1.8s ease-in-out infinite;"><path d="M8 1v18M2 13l6 6 6-6" stroke="#fff" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </div>
+      </section>
 
-    <!-- ================= GREETING ================= -->
-    <section class="section greeting reveal">
-      <span class="section__deco">인사말</span>
-      <p class="greeting__poem">
-        서로가 마주보며 다져온 사랑을<br />
-        이제 함께 한 곳을 바라보며<br />
-        걸어갈 수 있는 큰 사랑으로 키우고자 합니다.
-      </p>
-      <p class="greeting__body">
-        저희 두 사람이 사랑과 믿음으로<br />
-        한 가정을 이루게 되었습니다.<br />
-        귀한 걸음 하시어 축복해 주시면<br />
-        더없는 기쁨으로 간직하겠습니다.
-      </p>
-      <div class="greeting__family">
-        <p>
-          <span data-placeholder="groom-father">김OO</span> ·
-          <span data-placeholder="groom-mother">박OO</span>
-          의 <span class="family__rel">아들</span>
-          <span data-placeholder="groom">민준</span>
+      <!-- ===== 인사말 ===== -->
+      <section style="min-height:100%; display:flex; flex-direction:column; justify-content:center; background:#f6f3ec; padding:62px 32px; position:relative; overflow:hidden;">
+        <div data-reveal style="text-align:var(--align,center); margin-bottom:30px;">
+          <div style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:13px; letter-spacing:.34em; text-transform:uppercase; color:var(--c-accent,#7a9277); margin-bottom:12px;">Invitation</div>
+          <h2 style="font-family:var(--f-kr,'Gowun Batang',serif); font-weight:500; font-size:24px; color:var(--c-deep,#36443d); margin:0;">초대합니다</h2>
+          <div style="display:flex; align-items:center; justify-content:center; gap:9px; margin-top:16px;"><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent,#2f9e5f)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C6.5 17 4.5 10.5 12 3c7.5 7.5 5.5 14 0 18Z"></path><path d="M12 6.5V19"></path><path d="M12 12l2.6-2.6M12 14.6l-2.4-2.4"></path></svg><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span></div>
+        </div>
+        <p data-reveal style="font-family:var(--f-kr,'Gowun Batang',serif); text-align:center; font-size:17px; line-height:2.15; color:var(--c-ink,#4a554d); margin:0 0 40px; letter-spacing:.01em; text-wrap:pretty;">
+          여름의 푸른 빛이<br>가장 짙어질 무렵,<br><br>오랜 시간 서로의 계절을<br>함께 걸어온 두 사람이<br>이제 같은 곳을 바라보며<br>새로운 길을 시작합니다.<br><br>귀한 걸음으로 축복해 주시면<br>더없는 기쁨으로 간직하겠습니다.
         </p>
-        <p>
-          <span data-placeholder="bride-father">이OO</span> ·
-          <span data-placeholder="bride-mother">최OO</span>
-          의 <span class="family__rel">딸</span>
-          <span data-placeholder="bride">서연</span>
-        </p>
-      </div>
-      <button class="btn-call" type="button" data-toggle="contact">
-        축하 연락하기
-      </button>
-      <div class="contact-panel" id="contact" hidden>
-        <div class="contact-col">
-          <p class="contact-col__title">신랑측</p>
-          <a class="contact-row" href="tel:01000000000">
-            <span>신랑 민준</span><span class="contact-ico">📞</span>
+        <div data-reveal style="display:flex; flex-direction:column; align-items:center; gap:14px;">
+          <div style="display:flex; align-items:center; gap:10px; font-family:var(--f-kr,'Gowun Batang',serif); font-size:15px; color:var(--c-deep,#36443d);">
+            <span style="color:var(--c-accent,#7a9277); font-size:13px;">류청림 · 송소영</span>의 <strong style="font-weight:500;">아들</strong> 근창
+          </div>
+          <div style="display:flex; align-items:center; gap:10px; font-family:var(--f-kr,'Gowun Batang',serif); font-size:15px; color:var(--c-deep,#36443d);">
+            <span style="color:var(--c-accent,#7a9277); font-size:13px;">김승수 · 변수아</span>의 <strong style="font-weight:500;">딸</strong> 효은
+          </div>
+          <div style="display:flex; gap:10px; margin-top:10px;">
+            <a href="tel:01075284143" style="display:flex; align-items:center; gap:6px; padding:9px 16px; border:1px solid var(--c-line,rgba(54,68,61,.16)); border-radius:999px; font-size:12px; color:var(--c-deep,#36443d); text-decoration:none;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M6.5 3.5h3l1.3 4-2 1.4a11 11 0 0 0 4.8 4.8l1.4-2 4 1.3v3a1.6 1.6 0 0 1-1.7 1.6A15.4 15.4 0 0 1 5 5.2 1.6 1.6 0 0 1 6.5 3.5Z"></path></svg>신랑측에 연락</a>
+            <a href="tel:01075287504" style="display:flex; align-items:center; gap:6px; padding:9px 16px; border:1px solid var(--c-line,rgba(54,68,61,.16)); border-radius:999px; font-size:12px; color:var(--c-deep,#36443d); text-decoration:none;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M6.5 3.5h3l1.3 4-2 1.4a11 11 0 0 0 4.8 4.8l1.4-2 4 1.3v3a1.6 1.6 0 0 1-1.7 1.6A15.4 15.4 0 0 1 5 5.2 1.6 1.6 0 0 1 6.5 3.5Z"></path></svg>신부측에 연락</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 신랑·신부 소개 ===== -->
+      <section style="min-height:100%; display:flex; flex-direction:column; justify-content:center; background:#f6f3ec; padding:62px 28px;">
+        <div data-reveal style="text-align:var(--align,center); margin-bottom:34px;">
+          <div style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:13px; letter-spacing:.34em; text-transform:uppercase; color:var(--c-accent,#7a9277); margin-bottom:12px;">The Couple</div>
+          <h2 style="font-family:var(--f-kr,'Gowun Batang',serif); font-weight:500; font-size:24px; color:var(--c-deep,#36443d); margin:0;">신랑 &amp; 신부</h2>
+          <div style="display:flex; align-items:center; justify-content:center; gap:9px; margin-top:16px;"><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent,#2f9e5f)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C6.5 17 4.5 10.5 12 3c7.5 7.5 5.5 14 0 18Z"></path><path d="M12 6.5V19"></path><path d="M12 12l2.6-2.6M12 14.6l-2.4-2.4"></path></svg><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span></div>
+        </div>
+        <div data-reveal style="border-radius:9px; overflow:hidden; box-shadow:0 10px 30px -18px rgba(40,55,45,.5); margin-bottom:22px;">
+          <img src="https://lh3.googleusercontent.com/d/1rzuOg5e8L5MOCc_r9_g5XE16R3dM5-Sp=w1200" alt="신랑 신부" style="display:block; width:100%; aspect-ratio:4/3; object-fit:cover;">
+        </div>
+        <div data-reveal style="background:var(--c-paper,#fff); border-radius:9px; padding:24px 8px; display:flex; align-items:stretch; box-shadow:0 8px 24px -16px rgba(40,55,45,.4);">
+          <div style="flex:1; text-align:center; padding:0 5px;">
+            <div style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:13px; letter-spacing:.2em; color:var(--c-accent,#7a9277);">GROOM</div>
+            <div style="font-family:var(--f-kr,'Gowun Batang',serif); font-size:20px; color:var(--c-deep,#36443d); margin:6px 0 10px;">류근창</div>
+            <p style="font-size:12px; line-height:1.95; letter-spacing:-.01em; color:var(--c-ink,#4a554d); margin:0;">오랜 시간 변함없이<br>늘 한결같은 사람<br>효은이의 사랑하는 반쪽</p>
+          </div>
+          <div style="width:1px; background:var(--c-line,rgba(54,68,61,.18)); flex-shrink:0;"></div>
+          <div style="flex:1; text-align:center; padding:0 5px;">
+            <div style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:13px; letter-spacing:.2em; color:var(--c-accent,#7a9277);">BRIDE</div>
+            <div style="font-family:var(--f-kr,'Gowun Batang',serif); font-size:20px; color:var(--c-deep,#36443d); margin:6px 0 10px;">김효은</div>
+            <p style="font-size:12px; line-height:1.95; letter-spacing:-.01em; color:var(--c-ink,#4a554d); margin:0;">끊임없이 도전하는<br>늘 열정적인 사람<br>근창이의 평생 동반자</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 캘린더 / D-day ===== -->
+      <section style="min-height:100%; display:flex; flex-direction:column; justify-content:center; background:#f6f3ec; padding:62px 30px;">
+        <div data-reveal style="text-align:var(--align,center); margin-bottom:26px;">
+          <div style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:13px; letter-spacing:.34em; text-transform:uppercase; color:var(--c-accent,#7a9277); margin-bottom:12px;">The Date</div>
+          <h2 style="font-family:var(--f-kr,'Gowun Batang',serif); font-weight:500; font-size:24px; color:var(--c-deep,#36443d); margin:0;">예식 날짜</h2><div style="display:flex; align-items:center; justify-content:center; gap:9px; margin-top:14px;"><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent,#2f9e5f)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C6.5 17 4.5 10.5 12 3c7.5 7.5 5.5 14 0 18Z"></path><path d="M12 6.5V19"></path><path d="M12 12l2.6-2.6M12 14.6l-2.4-2.4"></path></svg><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span></div>
+        </div>
+        <div data-reveal style="background:var(--c-paper,#fff); border-radius:9px; padding:24px 20px; box-shadow:0 8px 24px -16px rgba(40,55,45,.4);">
+          <div style="text-align:center; font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:17px; letter-spacing:.2em; color:var(--c-deep,#36443d); margin-bottom:18px;">AUGUST 2026</div>
+          <div style="display:grid; grid-template-columns:repeat(7,1fr); gap:2px; text-align:center; font-size:12px;">
+            <div style="color:#c98b7a; padding:6px 0;">일</div><div style="color:var(--c-ink,#4a554d); padding:6px 0;">월</div><div style="color:var(--c-ink,#4a554d); padding:6px 0;">화</div><div style="color:var(--c-ink,#4a554d); padding:6px 0;">수</div><div style="color:var(--c-ink,#4a554d); padding:6px 0;">목</div><div style="color:var(--c-ink,#4a554d); padding:6px 0;">금</div><div style="color:var(--c-accent,#7a9277); padding:6px 0;">토</div>
+            <div></div><div></div><div></div><div></div><div></div><div></div><div style="padding:8px 0; color:var(--c-deep,#36443d);">1</div>
+            <div style="padding:8px 0; color:#c98b7a;">2</div><div style="padding:8px 0;">3</div><div style="padding:8px 0;">4</div><div style="padding:8px 0;">5</div><div style="padding:8px 0;">6</div><div style="padding:8px 0;">7</div><div style="padding:8px 0; color:var(--c-deep,#36443d);">8</div>
+            <div style="padding:8px 0; color:#c98b7a;">9</div><div style="padding:8px 0;">10</div><div style="padding:8px 0;">11</div><div style="padding:8px 0;">12</div><div style="padding:8px 0;">13</div><div style="padding:8px 0;">14</div><div style="padding:8px 0; color:var(--c-deep,#36443d);">15</div>
+            <div style="padding:8px 0; color:#c98b7a;">16</div><div style="padding:8px 0;">17</div><div style="padding:8px 0;">18</div><div style="padding:8px 0;">19</div><div style="padding:8px 0;">20</div><div style="padding:8px 0;">21</div><div style="padding:8px 0; color:var(--c-deep,#36443d);">22</div>
+            <div style="padding:2px 0;"><div style="position:relative; width:38px; height:38px; margin:0 auto; display:flex; align-items:center; justify-content:center;"><svg viewBox="0 0 24 24" style="position:absolute; inset:0; width:100%; height:100%; filter:drop-shadow(0 2px 4px rgba(214,40,40,.45));"><path d="M12 21C6.5 17 3 13 3 8.8 3 6 5 4 7.5 4c1.7 0 3.2 1 4.5 2.6C13.3 5 14.8 4 16.5 4 19 4 21 6 21 8.8c0 4.2-3.5 8.2-9 12.2Z" fill="#e23b4e"></path></svg><span style="position:absolute; inset:-4px;"><svg viewBox="0 0 24 24" style="width:100%; height:100%; animation:pulseRing 2.4s ease-out infinite; transform-origin:center;"><path d="M12 21C6.5 17 3 13 3 8.8 3 6 5 4 7.5 4c1.7 0 3.2 1 4.5 2.6C13.3 5 14.8 4 16.5 4 19 4 21 6 21 8.8c0 4.2-3.5 8.2-9 12.2Z" fill="none" stroke="#e23b4e" stroke-width="1.1"></path></svg></span><span style="position:relative; z-index:1; color:#fff; font-size:11px; font-weight:600; margin-top:1px;">23</span></div></div><div style="padding:8px 0;">24</div><div style="padding:8px 0;">25</div><div style="padding:8px 0;">26</div><div style="padding:8px 0;">27</div><div style="padding:8px 0;">28</div><div style="padding:8px 0; color:var(--c-deep,#36443d);">29</div>
+            <div style="padding:8px 0; color:#c98b7a;">30</div><div style="padding:8px 0;">31</div>
+          </div>
+          <div style="text-align:center; margin-top:18px; padding-top:16px; border-top:1px solid var(--c-line,rgba(54,68,61,.16)); font-size:13px; color:var(--c-ink,#4a554d);">2026년 8월 23일 일요일 · 오후 12시 50분</div>
+        </div>
+        <div data-reveal style="margin-top:20px; background:linear-gradient(160deg,#1f5138,#143a29); border-radius:10px; padding:20px 20px 18px; text-align:center; color:#fff; position:relative; overflow:hidden; box-shadow:0 14px 30px -16px rgba(20,40,28,.7);">
+          <svg viewBox="0 0 24 24" width="120" height="120" fill="rgba(255,255,255,.05)" style="position:absolute; right:-22px; bottom:-26px; pointer-events:none;"><path d="M12 2C6 8 5 15 12 22 19 15 18 8 12 2Z"></path></svg>
+          <div style="display:inline-flex; align-items:center; gap:7px; font-size:12.5px; letter-spacing:.04em; opacity:.92;"><span style="display:inline-flex; color:#ff8fa0;"><svg width="12" height="12" viewBox="0 0 24 24" fill="#ff8fa0"><path d="M12 20C6.5 16 3.5 12.5 3.5 8.8 3.5 6.2 5.5 4.5 8 4.5c1.7 0 3.1 1 4 2.3.9-1.3 2.3-2.3 4-2.3 2.5 0 4.5 1.7 4.5 4.3 0 3.7-3 7.2-8.5 11.2Z"></path></svg></span>류근창 · 김효은의 결혼식까지</div>
+          <div style="display:flex; justify-content:center; gap:7px; margin-top:14px;">
+            <div style="flex:1; max-width:68px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.16); border-radius:6.5px; padding:13px 0;"><div id="cdD" style="font-family:'Gowun Batang',serif; font-size:26px; font-weight:700; line-height:1;">00</div><div style="font-size:10.5px; letter-spacing:.14em; opacity:.7; margin-top:7px;">DAYS</div></div>
+            <div style="flex:1; max-width:68px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.16); border-radius:6.5px; padding:13px 0;"><div id="cdH" style="font-family:'Gowun Batang',serif; font-size:26px; font-weight:700; line-height:1;">00</div><div style="font-size:10.5px; letter-spacing:.14em; opacity:.7; margin-top:7px;">HOURS</div></div>
+            <div style="flex:1; max-width:68px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.16); border-radius:6.5px; padding:13px 0;"><div id="cdM" style="font-family:'Gowun Batang',serif; font-size:26px; font-weight:700; line-height:1;">00</div><div style="font-size:10.5px; letter-spacing:.14em; opacity:.7; margin-top:7px;">MIN</div></div>
+            <div style="flex:1; max-width:68px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.16); border-radius:6.5px; padding:13px 0;"><div id="cdS" style="font-family:'Gowun Batang',serif; font-size:26px; font-weight:700; line-height:1; color:#ffd9a0;">00</div><div style="font-size:10.5px; letter-spacing:.14em; opacity:.7; margin-top:7px;">SEC</div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 갤러리 ===== -->
+      <section style="min-height:100%; display:flex; flex-direction:column; justify-content:center; background:#f6f3ec; padding:62px 24px;">
+        <div data-reveal style="text-align:var(--align,center); margin-bottom:14px;">
+          <div style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:13px; letter-spacing:.34em; text-transform:uppercase; color:var(--c-accent,#7a9277); margin-bottom:12px;">Gallery</div>
+          <h2 style="font-family:var(--f-kr,'Gowun Batang',serif); font-weight:500; font-size:24px; color:var(--c-deep,#36443d); margin:0;">우리의 순간들</h2><div style="display:flex; align-items:center; justify-content:center; gap:9px; margin-top:14px;"><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent,#2f9e5f)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C6.5 17 4.5 10.5 12 3c7.5 7.5 5.5 14 0 18Z"></path><path d="M12 6.5V19"></path><path d="M12 12l2.6-2.6M12 14.6l-2.4-2.4"></path></svg><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span></div>
+        </div>
+        <p data-reveal style="text-align:center; font-size:11.5px; color:var(--c-ink,#4a554d); opacity:.75; margin:0 0 22px;">사진을 누르면 크게 볼 수 있어요</p>
+        <div id="gallery" style="display:grid; grid-auto-flow:column; grid-template-rows:repeat(2, auto); grid-auto-columns:132px; gap:8px; overflow-x:auto; padding:2px 24px 12px; margin:0 -24px; -webkit-overflow-scrolling:touch; scroll-snap-type:x proximity;"></div>
+      </section>
+
+      <!-- ===== 오시는 길 ===== -->
+      <section style="min-height:100%; display:flex; flex-direction:column; justify-content:center; background:#f6f3ec; padding:62px 28px;">
+        <div data-reveal style="text-align:var(--align,center); margin-bottom:26px;">
+          <div style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:13px; letter-spacing:.34em; text-transform:uppercase; color:var(--c-accent,#7a9277); margin-bottom:12px;">Location</div>
+          <h2 style="font-family:var(--f-kr,'Gowun Batang',serif); font-weight:500; font-size:24px; color:var(--c-deep,#36443d); margin:0;">오시는 길</h2><div style="display:flex; align-items:center; justify-content:center; gap:9px; margin-top:14px;"><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent,#2f9e5f)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C6.5 17 4.5 10.5 12 3c7.5 7.5 5.5 14 0 18Z"></path><path d="M12 6.5V19"></path><path d="M12 12l2.6-2.6M12 14.6l-2.4-2.4"></path></svg><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span></div>
+        </div>
+        <div data-reveal style="text-align:center; margin-bottom:18px;">
+          <div style="font-family:var(--f-kr,'Gowun Batang',serif); font-size:18px; color:var(--c-deep,#36443d);">천안 T웨딩 그레이스홀</div>
+          <div style="font-size:13px; color:var(--c-ink,#4a554d); margin-top:6px;">충남 천안시 동남구 목천읍 응원3길 27 · 그레이스홀</div>
+        </div>
+        <div data-reveal style="margin-bottom:18px;">
+          <a href="https://naver.me/5WUywOkk" target="_blank" rel="noopener" class="mapwrap" style="display:block; border-radius:8px; overflow:hidden; box-shadow:0 8px 24px -16px rgba(40,55,45,.4);">
+            <img src="https://lh3.googleusercontent.com/d/1PEMx1M0zTEIC0MtdOgb6MJo6tQ1mpjhr=w1000" alt="티웨딩 천안 그레이스홀 약도" style="display:block; width:100%; height:auto;" onerror="this.closest('.mapwrap').classList.add('mapfail')">
+            <div class="mapfallback" style="flex-direction:column; align-items:center; justify-content:center; gap:8px; height:200px; background:repeating-linear-gradient(45deg,#eef3ee 0 14px,#e6efe6 14px 28px); color:var(--c-ink,#4a554d);">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"></path><circle cx="12" cy="10" r="2.4"></circle></svg>
+              <span style="font-size:12px;">네이버 지도에서 약도 보기</span>
+            </div>
           </a>
-          <a class="contact-row" href="tel:01000000000">
-            <span>아버지 김OO</span><span class="contact-ico">📞</span>
-          </a>
-          <a class="contact-row" href="tel:01000000000">
-            <span>어머니 박OO</span><span class="contact-ico">📞</span>
-          </a>
         </div>
-        <div class="contact-col">
-          <p class="contact-col__title">신부측</p>
-          <a class="contact-row" href="tel:01000000000">
-            <span>신부 서연</span><span class="contact-ico">📞</span>
-          </a>
-          <a class="contact-row" href="tel:01000000000">
-            <span>아버지 이OO</span><span class="contact-ico">📞</span>
-          </a>
-          <a class="contact-row" href="tel:01000000000">
-            <span>어머니 최OO</span><span class="contact-ico">📞</span>
-          </a>
+        <div data-reveal style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:24px;">
+          <a href="https://naver.me/5WUywOkk" target="_blank" rel="noopener" style="text-align:center; padding:11px 0; border:1px solid var(--c-line,rgba(54,68,61,.16)); border-radius:6px; font-size:12px; color:var(--c-deep,#36443d); text-decoration:none;">네이버지도</a>
+          <a href="https://map.kakao.com" target="_blank" rel="noopener" style="text-align:center; padding:11px 0; border:1px solid var(--c-line,rgba(54,68,61,.16)); border-radius:6px; font-size:12px; color:var(--c-deep,#36443d); text-decoration:none;">카카오맵</a>
+          <a href="https://www.tmap.co.kr" target="_blank" rel="noopener" style="text-align:center; padding:11px 0; border:1px solid var(--c-line,rgba(54,68,61,.16)); border-radius:6px; font-size:12px; color:var(--c-deep,#36443d); text-decoration:none;">티맵</a>
         </div>
+        <div data-reveal style="display:flex; flex-direction:column; gap:14px;">
+          <div style="display:flex; gap:12px;"><span style="flex-shrink:0; line-height:1; color:var(--c-deep,#36443d);"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11V6.5A2.5 2.5 0 0 1 7.5 4h9A2.5 2.5 0 0 1 19 6.5V16H5z"></path><path d="M5 12h14"></path><path d="M8 19v1.5M16 19v1.5"></path><path d="M8 16h.01M16 16h.01"></path></svg></span><div><div style="font-size:13px; color:var(--c-deep,#36443d); font-weight:500; margin-bottom:7px;">셔틀버스 탑승 정보 (20~30분 간격)</div><div style="font-size:12px; line-height:1.6; color:var(--c-ink,#4a554d);"><b>천안 터미널</b> : 신세계백화점 옆 올리브영 앞 탑승<br>"올리브영 천안타운" 검색 (스타벅스, 애슐리 사이 위치)</div><div style="font-size:12px; line-height:1.6; color:var(--c-ink,#4a554d); margin-top:5px;"><b>천안역</b> : 동부광장 건너편 GS25편의점 앞 탑승<br>"GS25 천안역점"으로 검색</div></div></div>
+          <div style="display:flex; gap:12px;"><span style="flex-shrink:0; line-height:1; color:var(--c-deep,#36443d);"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="4.5" width="15" height="15" rx="3"></rect><path d="M9.5 16V8h3a2.5 2.5 0 0 1 0 5h-3"></path></svg></span><div><div style="font-size:13px; color:var(--c-deep,#36443d); font-weight:500; margin-bottom:3px;">주차 안내</div><div style="font-size:12px; line-height:1.6; color:var(--c-ink,#4a554d);">건물 야외 주차장 · 2시간 무료 (예식 하객)</div></div></div>
+        </div>
+      </section>
+
+      <!-- ===== 마음 전하실 곳 ===== -->
+      <section style="min-height:100%; display:flex; flex-direction:column; justify-content:center; background:#f6f3ec; padding:62px 28px;">
+        <div data-reveal style="text-align:var(--align,center); margin-bottom:14px;">
+          <div style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:13px; letter-spacing:.34em; text-transform:uppercase; color:var(--c-accent,#7a9277); margin-bottom:12px;">With Heart</div>
+          <h2 style="font-family:var(--f-kr,'Gowun Batang',serif); font-weight:500; font-size:24px; color:var(--c-deep,#36443d); margin:0;">마음 전하실 곳</h2><div style="display:flex; align-items:center; justify-content:center; gap:9px; margin-top:14px;"><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent,#2f9e5f)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C6.5 17 4.5 10.5 12 3c7.5 7.5 5.5 14 0 18Z"></path><path d="M12 6.5V19"></path><path d="M12 12l2.6-2.6M12 14.6l-2.4-2.4"></path></svg><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span></div>
+        </div>
+        <p data-reveal style="text-align:center; font-size:12.5px; line-height:1.7; color:var(--c-ink,#4a554d); margin:0 0 24px;">참석이 어려우신 분들을 위해<br>계좌번호를 안내드립니다.</p>
+        <div data-reveal style="display:flex; flex-direction:column; gap:12px;">
+          <div style="background:var(--c-paper,#fff); border-radius:7px; overflow:hidden; box-shadow:0 6px 18px -14px rgba(40,55,45,.4);">
+            <button data-acc-toggle="groom" style="width:100%; display:flex; justify-content:space-between; align-items:center; padding:16px 20px; background:transparent; border:none; cursor:pointer; font-size:14px; color:var(--c-deep,#36443d); font-family:var(--f-kr,'Gowun Batang',serif);"><span>신랑측 마음 전하실 곳</span><span class="acc-label" style="color:var(--c-accent,#7a9277); font-size:12px;">열기 +</span></button>
+            <div class="acc-body" data-acc="groom" hidden style="padding:0 20px 12px;"></div>
+          </div>
+          <div style="background:var(--c-paper,#fff); border-radius:7px; overflow:hidden; box-shadow:0 6px 18px -14px rgba(40,55,45,.4);">
+            <button data-acc-toggle="bride" style="width:100%; display:flex; justify-content:space-between; align-items:center; padding:16px 20px; background:transparent; border:none; cursor:pointer; font-size:14px; color:var(--c-deep,#36443d); font-family:var(--f-kr,'Gowun Batang',serif);"><span>신부측 마음 전하실 곳</span><span class="acc-label" style="color:var(--c-accent,#7a9277); font-size:12px;">열기 +</span></button>
+            <div class="acc-body" data-acc="bride" hidden style="padding:0 20px 12px;"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== RSVP ===== -->
+      <section style="min-height:100%; display:flex; flex-direction:column; justify-content:center; background:#f6f3ec; padding:62px 30px;">
+        <div data-reveal style="text-align:var(--align,center); margin-bottom:14px;">
+          <div style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:13px; letter-spacing:.34em; text-transform:uppercase; color:var(--c-accent,#7a9277); margin-bottom:12px;">R.S.V.P</div>
+          <h2 style="font-family:var(--f-kr,'Gowun Batang',serif); font-weight:500; font-size:24px; color:var(--c-deep,#36443d); margin:0;">참석 의사 전달</h2><div style="display:flex; align-items:center; justify-content:center; gap:9px; margin-top:14px;"><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent,#2f9e5f)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C6.5 17 4.5 10.5 12 3c7.5 7.5 5.5 14 0 18Z"></path><path d="M12 6.5V19"></path><path d="M12 12l2.6-2.6M12 14.6l-2.4-2.4"></path></svg><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span></div>
+        </div>
+        <p data-reveal style="text-align:center; font-size:12.5px; line-height:1.7; color:var(--c-ink,#4a554d); margin:0 0 26px;">정성껏 준비하기 위해<br>참석 여부를 알려주시면 감사하겠습니다.</p>
+        <div id="rsvpDone" hidden style="text-align:center; padding:34px 20px; background:var(--c-soft,#dde6dc); border-radius:9px;">
+          <div style="display:flex; justify-content:center; margin-bottom:10px; color:var(--c-accent,#2f9e5f);"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19C5 11 11 5 19 5c0 8-6 14-14 14Z"></path><path d="M5 19c4-1 8-4 11-8"></path></svg></div>
+          <div style="font-family:var(--f-kr,'Gowun Batang',serif); font-size:17px; color:var(--c-deep,#36443d);">소중한 마음 감사합니다</div>
+          <div style="font-size:12.5px; color:var(--c-ink,#4a554d); margin-top:6px;">참석 의사가 전달되었어요.</div>
+        </div>
+        <div id="rsvpForm" data-reveal style="display:flex; flex-direction:column; gap:16px;">
+          <div>
+            <div style="font-size:12px; color:var(--c-deep,#36443d); margin-bottom:8px;">어느 측 하객이신가요?</div>
+            <div style="display:flex; gap:8px;">
+              <button class="seg on" data-rsvp="side" data-val="신랑측">신랑측</button>
+              <button class="seg" data-rsvp="side" data-val="신부측">신부측</button>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:12px; color:var(--c-deep,#36443d); margin-bottom:8px;">참석 여부</div>
+            <div style="display:flex; gap:8px;">
+              <button class="seg on" data-rsvp="attending" data-val="참석">참석합니다</button>
+              <button class="seg" data-rsvp="attending" data-val="불참">참석이 어려워요</button>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:12px; color:var(--c-deep,#36443d); margin-bottom:8px;">식사 여부</div>
+            <div style="display:flex; gap:8px;">
+              <button class="seg on" data-rsvp="meal" data-val="식사 함">식사 함</button>
+              <button class="seg" data-rsvp="meal" data-val="식사 안함">식사 안함</button>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:12px; color:var(--c-deep,#36443d); margin-bottom:8px;">성함</div>
+            <input id="rsvpName" placeholder="이름을 입력해 주세요" style="width:100%; padding:13px 14px; border:1px solid var(--c-line,rgba(54,68,61,.16)); border-radius:6px; font-size:14px; color:var(--c-deep,#36443d); outline:none; background:var(--c-bg,#f4f1ea);">
+          </div>
+          <div>
+            <div style="font-size:12px; color:var(--c-deep,#36443d); margin-bottom:8px;">동행 인원 (본인 포함)</div>
+            <div style="display:flex; align-items:center; gap:18px;">
+              <button id="countDec" style="width:38px; height:38px; border-radius:50%; border:1px solid var(--c-line,rgba(54,68,61,.16)); background:transparent; font-size:18px; color:var(--c-deep,#36443d); cursor:pointer;">−</button>
+              <span id="countVal" style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:22px; color:var(--c-deep,#36443d); min-width:24px; text-align:center;">1</span>
+              <button id="countInc" style="width:38px; height:38px; border-radius:50%; border:1px solid var(--c-line,rgba(54,68,61,.16)); background:transparent; font-size:18px; color:var(--c-deep,#36443d); cursor:pointer;">+</button>
+              <span style="font-size:13px; color:var(--c-ink,#4a554d);">명</span>
+            </div>
+          </div>
+          <button id="rsvpSubmit" style="margin-top:6px; width:100%; padding:15px; border:none; border-radius:6px; background:var(--c-accent,#7a9277); color:#fff; font-size:14px; font-weight:500; cursor:pointer; letter-spacing:.04em;">참석 의사 전달하기</button>
+        </div>
+      </section>
+
+      <!-- ===== 방명록 ===== -->
+      <section style="min-height:100%; display:flex; flex-direction:column; justify-content:center; background:#f6f3ec; padding:70px 26px;">
+        <div data-reveal style="text-align:var(--align,center); margin-bottom:24px;">
+          <div style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:13px; letter-spacing:.34em; text-transform:uppercase; color:var(--c-accent,#7a9277); margin-bottom:12px;">Guestbook</div>
+          <h2 style="font-family:var(--f-kr,'Gowun Batang',serif); font-weight:500; font-size:24px; color:var(--c-deep,#36443d); margin:0;">축하 한마디</h2><div style="display:flex; align-items:center; justify-content:center; gap:9px; margin-top:14px;"><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent,#2f9e5f)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C6.5 17 4.5 10.5 12 3c7.5 7.5 5.5 14 0 18Z"></path><path d="M12 6.5V19"></path><path d="M12 12l2.6-2.6M12 14.6l-2.4-2.4"></path></svg><span style="width:20px; height:1px; background:var(--c-accent,#2f9e5f); opacity:.5;"></span></div>
+        </div>
+        <div data-reveal style="text-align:center; font-size:11.5px; color:var(--c-ink,#4a554d); opacity:.75; margin:-10px 0 18px;">남겨주신 한마디가 <span id="gbCount" style="color:var(--c-accent,#2f9e5f); font-weight:600;">0</span>개 모였어요</div>
+        <div data-reveal style="position:relative; margin-bottom:20px; box-shadow:0 14px 32px -18px rgba(28,71,51,.5); background:#fbf7ec; border-radius:8px; min-height:480px;">
+          <img src="https://lh3.googleusercontent.com/d/1d8DTrn1e1Z0Q5IqJGQxYq7F-xcFn2dWh=w1000" alt="방명록" style="display:block; width:100%;" onerror="this.style.display='none'">
+          <div id="gbBoard" style="position:absolute; inset:0;"></div>
+        </div>
+        <div id="gbPager" hidden style="display:flex; align-items:center; justify-content:center; gap:16px; margin-bottom:20px;">
+          <button id="gbPrev" style="width:38px; height:38px; border-radius:50%; border:1px solid var(--c-line,rgba(28,71,51,.18)); background:var(--c-paper,#fff); color:var(--c-deep,#36443d); font-size:17px; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 12px -8px rgba(28,71,51,.5);">‹</button>
+          <span id="gbPageLabel" style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:13px; letter-spacing:.1em; color:var(--c-deep,#36443d);">1 / 1</span>
+          <button id="gbNext" style="width:38px; height:38px; border-radius:50%; border:1px solid var(--c-line,rgba(28,71,51,.18)); background:var(--c-paper,#fff); color:var(--c-deep,#36443d); font-size:17px; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 12px -8px rgba(28,71,51,.5);">›</button>
+        </div>
+        <button id="gbFormBtn" style="width:100%; padding:14px; border:1px solid var(--c-deep,#36443d); border-radius:8px; background:transparent; color:var(--c-deep,#36443d); font-size:13px; font-family:inherit; cursor:pointer; letter-spacing:.03em; display:inline-flex; align-items:center; justify-content:center; gap:7px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>방명록 남기기</button>
+      </section>
+
+      <!-- ===== 마무리 / 공유 ===== -->
+      <section style="min-height:100%; display:flex; flex-direction:column; justify-content:flex-start; background:#132a1e; padding:80px 0 40px; text-align:center; color:#fff; position:relative; overflow:hidden;">
+        <img src="https://lh3.googleusercontent.com/d/140Dj7KTsQaoLHNhXYe7yNgWlylRfezfH=w1000" alt="" style="position:absolute; inset:0; object-fit:cover; z-index:0; width:100%; height:100%;">
+        <div style="position:absolute; z-index:1; inset:0; background:linear-gradient(0deg, rgba(15,32,22,0) 55%, rgba(15,32,22,.34) 82%, rgba(15,32,22,.72) 100%);"></div>
+        <div data-reveal style="position:relative; z-index:2; padding:0 34px;">
+          <div style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-style:italic; font-size:20px; opacity:.9; margin-bottom:18px;">Thank you</div><p style="font-family:var(--f-kr,'Gowun Batang',serif); font-size:15px; line-height:2; opacity:.95; margin:0 0 30px;">저희의 시작을 함께해 주셔서<br>진심으로 감사합니다.</p>
+          <div style="font-size:12px; letter-spacing:.24em; opacity:.7;">2026 · 08 · 23</div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- BOTTOM BAR -->
+    <div style="position:absolute; bottom:0; left:0; right:0; z-index:40; display:flex; background:rgba(255,255,255,.85); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-top:1px solid var(--c-line,rgba(54,68,61,.16));">
+      <button id="barContact" style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; padding:11px 0 13px; border:none; background:transparent; cursor:pointer; color:var(--c-deep,#36443d); font-size:11px; font-family:inherit;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 3.5h3l1.3 4-2 1.4a11 11 0 0 0 4.8 4.8l1.4-2 4 1.3v3a1.6 1.6 0 0 1-1.7 1.6A15.4 15.4 0 0 1 5 5.2 1.6 1.6 0 0 1 6.5 3.5Z"></path></svg>연락하기</button>
+      <button id="barCal" style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; padding:11px 0 13px; border:none; border-left:1px solid var(--c-line,rgba(54,68,61,.12)); border-right:1px solid var(--c-line,rgba(54,68,61,.12)); background:transparent; cursor:pointer; color:var(--c-deep,#36443d); font-size:11px; font-family:inherit;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="5.5" width="15" height="14" rx="2"></rect><path d="M4.5 9.5h15"></path><path d="M8.5 3.5v4M15.5 3.5v4"></path></svg>일정 저장</button>
+      <button id="barShare" style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; padding:11px 0 13px; border:none; background:transparent; cursor:pointer; color:var(--c-deep,#36443d); font-size:11px; font-family:inherit;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.5" cy="12" r="2.2"></circle><circle cx="17" cy="6.5" r="2.2"></circle><circle cx="17" cy="17.5" r="2.2"></circle><path d="M8.4 11l6.4-3.4M8.4 13l6.4 3.4"></path></svg>공유하기</button>
+    </div>
+
+    <!-- INTRO LENS-FLARE SWEEP -->
+    <div id="flare" style="position:absolute; inset:0; z-index:46; pointer-events:none; overflow:hidden;">
+      <div style="position:absolute; inset:0; background:#ffffff; animation:flrHold 2.3s ease-in-out forwards;"></div>
+      <div style="position:absolute; inset:0; background:radial-gradient(ellipse 120% 80% at 50% 44%, #ffffff 0%, rgba(255,250,238,.82) 45%, rgba(255,246,228,.4) 70%, rgba(255,246,228,0) 100%); animation:flrVeil 2.3s ease-in-out forwards;"></div>
+      <div style="position:absolute; inset:0; animation:flrMove 2.3s cubic-bezier(.5,0,.5,1) forwards, flrFade 2.3s ease forwards;">
+        <div style="position:absolute; top:44%; left:50%; transform:translate(-50%,-50%); width:230%; height:2px; background:linear-gradient(90deg, transparent, rgba(255,247,228,.85) 40%, #ffffff 50%, rgba(255,247,228,.85) 60%, transparent); box-shadow:0 0 9px 1px rgba(255,250,238,.85);"></div>
+        <div style="position:absolute; top:44%; left:50%; transform:translate(-50%,-50%); width:170%; height:12px; background:linear-gradient(90deg, transparent, rgba(255,244,224,.4) 44%, rgba(255,251,240,.7) 50%, rgba(255,244,224,.4) 56%, transparent); filter:blur(5px);"></div>
+        <div style="position:absolute; top:44%; left:50%; transform:translate(-50%,-50%); width:3px; height:62%; background:linear-gradient(180deg, transparent, rgba(255,251,240,.7) 50%, transparent);"></div>
+        <div style="position:absolute; top:44%; left:50%; transform:translate(-50%,-50%); width:78px; height:78px; border-radius:50%; background:radial-gradient(circle, #ffffff 0%, rgba(255,250,236,.85) 32%, rgba(255,246,226,0) 72%); box-shadow:0 0 44px 16px rgba(255,249,232,.8);"></div>
+        <div style="position:absolute; top:50%; left:63%; transform:translate(-50%,-50%); width:18px; height:18px; border-radius:50%; background:rgba(255,240,210,.32);"></div>
+        <div style="position:absolute; top:38%; left:39%; transform:translate(-50%,-50%); width:11px; height:11px; border-radius:50%; background:rgba(214,236,255,.3);"></div>
+        <div style="position:absolute; top:55%; left:29%; transform:translate(-50%,-50%); width:26px; height:26px; border-radius:50%; border:1px solid rgba(255,236,205,.35); background:rgba(255,236,205,.12);"></div>
+        <div style="position:absolute; top:46%; left:72%; transform:translate(-50%,-50%); width:34px; height:34px; border-radius:50%; border:1px solid rgba(220,240,255,.3); background:transparent;"></div>
       </div>
-    </section>
-
-    <!-- ================= CALENDAR / D-DAY ================= -->
-    <section class="section calendar reveal">
-      <span class="section__deco">예식 안내</span>
-      <p class="calendar__date">2026년 10월 17일 토요일 오후 1시</p>
-      <p class="calendar__place">그랜드홀 3층 그랜드볼룸</p>
-
-      <div class="cal" aria-hidden="true">
-        <div class="cal__grid cal__grid--head">
-          <span class="cal--sun">일</span><span>월</span><span>화</span>
-          <span>수</span><span>목</span><span>금</span><span class="cal--sat">토</span>
-        </div>
-        <div class="cal__grid" id="cal-body"><!-- generated --></div>
+      <div style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:13px; animation:flrMono 2.3s ease forwards;">
+        <div style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-style:italic; font-size:15px; letter-spacing:.14em; color:#6f8a72;">The Wedding of</div>
+        <div style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:30px; letter-spacing:.1em; color:#1c4733;">R &amp; K</div>
+        <div style="font-family:var(--f-disp,'Cormorant Garamond',serif); font-size:12px; letter-spacing:.24em; color:#3a5643;">2026 · 08 · 23</div>
       </div>
+    </div>
 
-      <div class="dday" id="dday">
-        <p class="dday__text">
-          <span data-placeholder="groom">민준</span> ♥
-          <span data-placeholder="bride">서연</span>의 결혼식이
-          <strong id="dday-count">D-DAY</strong> 남았습니다.
-        </p>
+    <!-- LIGHTBOX -->
+    <div id="lightbox" hidden style="position:absolute; inset:0; z-index:60; background:rgba(20,28,22,.94); display:flex; flex-direction:column; align-items:center; justify-content:center; animation:lbIn .25s ease;">
+      <div id="lbCounter" style="position:absolute; top:46px; left:0; right:0; text-align:center; color:rgba(255,255,255,.85); font-family:'Cormorant Garamond',serif; letter-spacing:.2em; font-size:14px;">1 / 20</div>
+      <button id="lbClose" style="position:absolute; top:42px; right:18px; width:34px; height:34px; border-radius:50%; border:none; background:rgba(255,255,255,.16); color:#fff; font-size:18px; cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+      <img id="lbImg" src="" alt="" style="width:300px; height:400px; object-fit:cover; border-radius:7px;">
+      <div style="position:absolute; bottom:48px; left:0; right:0; display:flex; justify-content:center; gap:40px;">
+        <button id="lbPrev" style="width:46px; height:46px; border-radius:50%; border:1px solid rgba(255,255,255,.4); background:rgba(255,255,255,.1); color:#fff; font-size:18px; cursor:pointer;">‹</button>
+        <button id="lbNext" style="width:46px; height:46px; border-radius:50%; border:1px solid rgba(255,255,255,.4); background:rgba(255,255,255,.1); color:#fff; font-size:18px; cursor:pointer;">›</button>
       </div>
-    </section>
+    </div>
 
-    <!-- ================= GALLERY ================= -->
-    <section class="section gallery reveal">
-      <span class="section__deco">갤러리</span>
-      <div class="gallery__grid" id="gallery">
-        <!-- Placeholder tiles; replace background with real photos -->
+    <!-- GUESTBOOK FORM MODAL -->
+    <div id="gbModal" hidden style="position:absolute; inset:0; z-index:60; background:rgba(20,28,22,.55); display:flex; align-items:center; justify-content:center; padding:26px; animation:lbIn .2s ease;">
+      <div style="width:100%; max-width:320px; background:var(--c-paper,#fff); border-radius:12px; padding:22px; box-shadow:0 24px 60px -20px rgba(0,0,0,.5);">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;"><span style="font-family:var(--f-kr,'Gowun Batang',serif); font-size:15px; color:var(--c-deep,#36443d);">두 사람에게 한마디</span><button id="gbModalClose" style="width:28px; height:28px; border-radius:50%; border:none; background:var(--c-bg,#f4f1ea); color:var(--c-deep,#36443d); font-size:14px; cursor:pointer;">✕</button></div>
+        <input id="gbName" placeholder="이름" style="width:100%; padding:11px 13px; border:1px solid var(--c-line,rgba(54,68,61,.16)); border-radius:5px; font-size:13px; color:var(--c-deep,#36443d); outline:none; background:var(--c-bg,#f4f1ea); margin-bottom:9px;">
+        <textarea id="gbMsg" placeholder="축하 메시지를 남겨주세요" rows="3" style="width:100%; padding:11px 13px; border:1px solid var(--c-line,rgba(54,68,61,.16)); border-radius:5px; font-size:13px; color:var(--c-deep,#36443d); outline:none; resize:none; background:var(--c-bg,#f4f1ea); font-family:inherit; margin-bottom:10px;"></textarea>
+        <button id="gbAdd" style="width:100%; padding:13px; border:none; border-radius:5px; background:var(--c-deep,#36443d); color:#fff; font-size:13px; cursor:pointer; letter-spacing:.03em; display:inline-flex; align-items:center; justify-content:center; gap:7px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5.5" width="17" height="13" rx="2"></rect><path d="M4 6.5l8 6 8-6"></path></svg>축하 메시지 남기기</button>
       </div>
-    </section>
+    </div>
 
-    <!-- ================= LOCATION ================= -->
-    <section class="section location reveal">
-      <span class="section__deco">오시는 길</span>
-      <p class="location__name">그랜드홀</p>
-      <p class="location__addr">서울특별시 강남구 테헤란로 000</p>
-      <div class="map" id="map" role="img" aria-label="예식장 위치 지도">
-        <span class="map__pin">📍</span>
-        <span class="map__hint">지도 영역 (실제 배포 시 지도 API 연동)</span>
-      </div>
-      <ul class="location__ways">
-        <li><b>지하철</b> 2호선 OO역 3번 출구 도보 5분</li>
-        <li><b>버스</b> OO정류장 하차 (간선 000, 지선 0000)</li>
-        <li><b>자가용</b> 내비게이션 &ldquo;그랜드홀&rdquo; 검색 · 주차 2시간 무료</li>
-      </ul>
-    </section>
+    <!-- TOAST -->
+    <div id="toast" hidden style="position:absolute; bottom:38px; left:50%; transform:translateX(-50%); z-index:70; background:rgba(30,42,33,.94); color:#fff; padding:12px 22px; border-radius:999px; font-size:12.5px; white-space:nowrap; animation:toastIn .3s ease; box-shadow:0 8px 24px rgba(0,0,0,.25);"></div>
 
-    <!-- ================= ACCOUNTS ================= -->
-    <section class="section accounts reveal">
-      <span class="section__deco">마음 전하실 곳</span>
-      <p class="accounts__lead">
-        참석이 어려우신 분들을 위해<br />
-        계좌번호를 안내드립니다.
-      </p>
-
-      <details class="acc-group">
-        <summary>신랑측 계좌번호</summary>
-        <div class="acc-item">
-          <span>신랑 · OO은행 000-0000-0000</span>
-          <button class="btn-copy" type="button" data-copy="OO은행 000-0000-0000">복사</button>
-        </div>
-        <div class="acc-item">
-          <span>혼주 · OO은행 000-0000-0000</span>
-          <button class="btn-copy" type="button" data-copy="OO은행 000-0000-0000">복사</button>
-        </div>
-      </details>
-
-      <details class="acc-group">
-        <summary>신부측 계좌번호</summary>
-        <div class="acc-item">
-          <span>신부 · OO은행 000-0000-0000</span>
-          <button class="btn-copy" type="button" data-copy="OO은행 000-0000-0000">복사</button>
-        </div>
-        <div class="acc-item">
-          <span>혼주 · OO은행 000-0000-0000</span>
-          <button class="btn-copy" type="button" data-copy="OO은행 000-0000-0000">복사</button>
-        </div>
-      </details>
-    </section>
-
-    <!-- ================= RSVP ================= -->
-    <section class="section rsvp reveal">
-      <span class="section__deco">참석 의사 전달</span>
-      <p class="rsvp__lead">
-        축하해 주시는 모든 분들을 정성껏 모실 수 있도록<br />
-        참석 의사를 전달해 주시면 감사하겠습니다.
-      </p>
-      <form class="rsvp__form" id="rsvp-form">
-        <div class="rsvp__side">
-          <label><input type="radio" name="side" value="신랑측" required /> 신랑측</label>
-          <label><input type="radio" name="side" value="신부측" /> 신부측</label>
-        </div>
-        <input type="text" name="name" placeholder="성함" required />
-        <div class="rsvp__row">
-          <select name="attend" required>
-            <option value="" disabled selected>참석 여부</option>
-            <option value="참석">참석</option>
-            <option value="미참석">미참석</option>
-          </select>
-          <input type="number" name="count" min="1" max="20" placeholder="인원수" />
-        </div>
-        <button type="submit" class="btn-primary">전달하기</button>
-        <p class="rsvp__msg" id="rsvp-msg" hidden></p>
-      </form>
-    </section>
-
-    <!-- ================= GUESTBOOK ================= -->
-    <section class="section guestbook reveal">
-      <span class="section__deco">방명록</span>
-      <form class="gb__form" id="gb-form">
-        <input type="text" name="gbname" placeholder="이름" required maxlength="20" />
-        <textarea name="gbmsg" placeholder="따뜻한 축하의 말을 남겨주세요" required maxlength="200"></textarea>
-        <button type="submit" class="btn-primary">등록</button>
-      </form>
-      <ul class="gb__list" id="gb-list"></ul>
-    </section>
-
-    <!-- ================= FOOTER ================= -->
-    <footer class="footer reveal">
-      <p class="footer__names">
-        <span data-placeholder="groom">민준</span> ♡
-        <span data-placeholder="bride">서연</span>
-      </p>
-      <div class="footer__share">
-        <button class="btn-share" type="button" data-share="link">링크 복사</button>
-        <button class="btn-share" type="button" data-share="top">처음으로</button>
-      </div>
-      <p class="footer__credit">Thank you for celebrating with us.</p>
-    </footer>
-  </main>
-
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-  <script src="js/main.js"></script>
+  </div>
+</div>
+<script src="app.js"></script>
 </body>
 </html>

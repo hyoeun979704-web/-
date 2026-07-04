@@ -1,55 +1,69 @@
-# 청첩장 (Wedding Invitation)
+# 류근창 ♥ 김효은 모바일 청첩장
 
-A mobile-first, single-page Korean wedding invitation (청첩장) — static HTML/CSS/JS,
-no build step, deployable to any static host (GitHub Pages, Netlify, Vercel, S3…).
+Claude Design(`청첩장_배포.dc.html`)을 **순수 HTML/CSS/JS 정적 사이트**로 구현한 모바일 청첩장입니다.
+빌드 과정·서버 없이 어떤 정적 호스팅(Netlify, Vercel, GitHub Pages, S3, Cloudflare Pages 등)에도 그대로 올리면 됩니다.
 
-## ⚠️ Template notice
+- 배포 URL: **https://20260823.hyoeun.io**
+- 예식: 2026년 8월 23일(일) 오후 12시 50분 · 천안 T웨딩 그레이스홀
 
-This is a **template implementation**, created because the original Claude Design
-source (`청첩장_배포.dc.html`) could not be imported in the current environment —
-the `claude_design` MCP requires interactive `/design-login`, which isn't
-available in a Claude Code **web** session.
-
-All names, dates, venue, phone numbers, account numbers, and photos are
-**placeholders** (marked with `data-placeholder` attributes in `index.html` and a
-`WEDDING` config object in `js/main.js`). To finish:
-
-1. Send the real design via **"Send to Claude Code Web"** from Claude Design, or
-   paste the `청첩장_배포.dc.html` source, and the template can be replaced/reconciled.
-2. Or edit the placeholders directly (see **Customizing** below).
-
-## Structure
+## 구성
 
 ```
-index.html      # markup + sections
-css/style.css   # styling (soft romantic palette, mobile-first)
-js/main.js      # calendar, D-day, gallery lightbox, copy, RSVP, guestbook
-assets/         # photos (og-image.jpg, gallery images) — add your own
+index.html   # 전체 마크업 (원본 .dc.html 디자인을 그대로 이식, 인라인 스타일)
+app.js       # 카운트다운·갤러리/라이트박스·계좌·RSVP·방명록·공유·음악·스냅스크롤
 ```
 
-## Sections
+섹션: 커버 → 인사말 → 신랑·신부 소개 → 예식 날짜(달력·D-day) → 갤러리 →
+오시는 길 → 마음 전하실 곳(계좌) → 참석 의사(RSVP) → 방명록 → 마무리(공유).
 
-Hero · 인사말(greeting) · 예식 안내 + 캘린더/D-Day · 갤러리 · 오시는 길(location) ·
-마음 전하실 곳(accounts) · 참석 의사(RSVP) · 방명록(guestbook) · 공유(share).
+## 이미지 · 음악 (구글 드라이브)
 
-## Customizing
+원본 디자인과 동일하게 사진은 구글 드라이브 CDN(`lh3.googleusercontent.com/d/{id}`)에서 로드합니다.
+드라이브 "모바일청첩장" 폴더의 파일을 참조합니다:
 
-- **Names / family / venue / phone**: edit the `data-placeholder` spans and
-  `tel:` / text content in `index.html`.
-- **Wedding date**: update the `WEDDING` object at the top of `js/main.js`
-  (drives the calendar highlight and D-day countdown) and the display strings
-  in `index.html`.
-- **Photos**: drop images into `assets/` and replace the gradient placeholders
-  (hero `.hero__photo` background in CSS; gallery tiles generated in `main.js`).
-- **RSVP & guestbook** currently persist to `localStorage` for demo purposes.
-  For real submissions, wire the form handlers in `main.js` to a backend
-  (e.g. a Google Form, Supabase table, or serverless endpoint).
+| 용도 | 파일 | 방식 |
+|---|---|---|
+| 커버·커플·갤러리(20장)·마무리 | 각 드라이브 이미지 | `lh3` 임베드 |
+| 약도 | 웨딩홀 약도.png | `lh3` 임베드 (실패 시 대체 박스 표시) |
+| 방명록 보드 | 방명록.png | `lh3` 임베드 |
+| 배경음악 | bgm.mp3 | 드라이브 직링크 |
 
-## Local preview
+> 임베드가 되려면 해당 드라이브 파일이 **"링크가 있는 모든 사용자 - 보기"**로 공유되어 있어야 합니다(현재 모두 공개 상태).
 
-Any static server works, e.g.:
+## 백엔드 없이 동작하는 부분
+
+이 청첩장은 **서버가 필요 없습니다.** 아래는 모두 클라이언트(브라우저)에서 처리됩니다.
+
+- **일정 저장** — 표준 `.ics` 파일을 브라우저에서 생성해 내려받습니다(외부 캘린더 API 불필요).
+- **공유하기** — 모바일은 OS 공유 시트(`navigator.share`), 그 외에는 링크 복사.
+- **계좌 복사** — 클립보드 복사.
+- **방명록** — 데모로 `localStorage`에 저장(그 기기에서만 유지). 방문자 간 공유 저장은 아래 참고.
+- **RSVP** — 제출 시 완료 화면 + `localStorage` 기록. 신랑·신부가 실제 응답을 모으려면 아래 참고.
+
+### RSVP·방명록을 실제로 수집하려면 (선택)
+
+정적 사이트라 자체적으로 응답을 서버에 남기진 않습니다. 원하시면 무료로 연동 가능합니다:
+
+- **구글 시트로 RSVP 수집**: Google Apps Script 웹앱을 만들어 URL을 받고,
+  `app.js`의 `#rsvpSubmit` 핸들러에서 `fetch(APPS_SCRIPT_URL, { method:'POST', body: JSON.stringify(rsvp) })` 한 줄만 추가하면 시트에 기록됩니다.
+- **방명록 공유 저장**: 동일하게 Apps Script/Supabase 등으로 저장·조회하도록 `addEntry`/`renderGb`를 연결.
+
+연동을 원하시면 말씀해 주세요. Apps Script 코드와 연결 지점까지 붙여드리겠습니다.
+
+## 이미지 저장 방지
+
+일반적인 저장 동작을 막아 두었습니다: 이미지 우클릭 컨텍스트 메뉴·드래그 차단.
+단, 스크린샷이나 개발자 도구를 통한 취득까지 원천 차단하는 것은 웹 특성상 불가능합니다.
+
+## 로컬 미리보기
 
 ```
-python3 -m http.server 8000
-# then open http://localhost:8000
+python3 -m http.server 8000    # http://localhost:8000
 ```
+
+## 커스터마이징
+
+- 이름·부모·인사말·예식 정보: `index.html`의 해당 텍스트.
+- 예식 일시(카운트다운): `app.js`의 `TARGET`, `index.html`의 달력/날짜 문구.
+- 계좌·연락처: `app.js`의 `groomAccts`/`brideAccts`, `index.html`의 `tel:` 링크.
+- 사진/음악: 드라이브 파일 교체(같은 파일 ID 유지) 또는 `app.js`의 `GAL` 배열·`index.html`의 이미지 URL 수정.
