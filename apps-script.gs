@@ -3,7 +3,7 @@
  *
  * [연결 방법]
  * 1) 구글시트 열기:
- *    https://docs.google.com/spreadsheets/d/1_3axp-rTi2Y642MHc0QMExkNZlk61TI8diGYhr3exCs/edit
+ *    https://docs.google.com/spreadsheets/d/1hOPHqswpXEw5F2TuYgolLY-G3d634ytlqKcaZpYEBgE/edit
  * 2) 상단 메뉴 [확장 프로그램] → [Apps Script]
  * 3) 기본 코드를 지우고 이 파일 전체를 붙여넣고 저장
  * 4) 오른쪽 위 [배포] → [새 배포] → 유형 "웹 앱"
@@ -14,7 +14,7 @@
  *    (방명록·RSVP가 이 시트의 '방명록' / 'RSVP' 탭에 자동 기록됩니다)
  */
 
-var SHEET_ID = '1_3axp-rTi2Y642MHc0QMExkNZlk61TI8diGYhr3exCs';
+var SHEET_ID = '1hOPHqswpXEw5F2TuYgolLY-G3d634ytlqKcaZpYEBgE';
 
 function getSheet(name, headers) {
   var ss = SpreadsheetApp.openById(SHEET_ID);
