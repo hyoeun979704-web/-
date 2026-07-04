@@ -340,5 +340,33 @@
       secs.forEach(revealSection);
     }
   }
+  // 하단 고정탭: 평소 숨김 → (1) 10초 이상 스크롤 멈춤 또는 (2) 마지막 섹션에서 부드럽게 등장
+  (function () {
+    var bar = $("bottomBar");
+    if (!bar) return;
+    bar.style.transition = "transform .45s cubic-bezier(.22,.61,.36,1)";
+    function show() { bar.style.transform = "translateX(-50%) translateY(0)"; }
+    function hide() { bar.style.transform = "translateX(-50%) translateY(140%)"; }
+    hide();
+    var atLast = false, idle;
+    function armIdle() { clearTimeout(idle); idle = setTimeout(function () { if (!atLast) show(); }, 10000); }
+    var secs = Array.prototype.slice.call(scroll.children).filter(function (el) { return el.tagName === "SECTION"; });
+    var last = secs[secs.length - 1];
+    if (last && "IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          atLast = e.isIntersecting;
+          if (atLast) { clearTimeout(idle); show(); } else { hide(); armIdle(); }
+        });
+      }, { threshold: 0.4 }).observe(last);
+    }
+    window.addEventListener("scroll", function () {
+      if (atLast) return;      // 마지막 섹션에선 계속 표시
+      hide();                  // 스크롤 중엔 숨김
+      armIdle();               // 멈춘 뒤 10초 후 다시 표시
+    }, { passive: true });
+    armIdle();                 // 최초 진입 후 10초 유휴 시 표시
+  })();
+
   setTimeout(function () { setupScrollFx(); setupReveal(); }, 80);
 })();
