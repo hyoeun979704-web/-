@@ -368,13 +368,14 @@
       var i = curIdx(y), cur = secs[i], next = secs[i + 1], prev = secs[i - 1];
       var cTop = top(cur), into = y - cTop, TH = vh * 0.12, target = null;
       var big = cur.getBoundingClientRect().height > vh + 40;
-      if (big) {
-        var bgap = (cTop + cur.getBoundingClientRect().height) - (y + vh);
-        if (dir > 0) { if (next && bgap < TH) target = top(next); }         // 큰 섹션: 바닥 근처서 아래로 → 다음
-        else { if (into < TH && prev) target = top(prev); }                 // top 근처서 위로 → 이전, 그 외 자유
-      } else {
-        if (dir > 0) { if (next && into > TH) target = top(next); }         // 아래로 조금이라도 넘김 → 다음 (되돌림 없음)
-        else { if (into > TH) target = cTop; else if (prev) target = top(prev); } // 위로 → 현재 상단/이전
+      // 아래로 넘길 때만 다음 섹션으로 스냅. 위로 스크롤은 스냅하지 않고 자유 스크롤.
+      if (dir > 0) {
+        if (big) {
+          var bgap = (cTop + cur.getBoundingClientRect().height) - (y + vh);
+          if (next && bgap < TH) target = top(next);   // 큰 섹션: 바닥 근처서 아래로 → 다음
+        } else {
+          if (next && into > TH) target = top(next);   // 아래로 조금이라도 넘김 → 다음
+        }
       }
       if (target === null || Math.abs(target - y) < 2) return;
       animating = true;
