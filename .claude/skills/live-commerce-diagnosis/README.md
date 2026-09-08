@@ -73,10 +73,18 @@ python3 scripts/scorecard.py measures.json
 
 ### 회귀 검증
 
-배점 로직을 손댔으면 반드시 돌린다. 원 사례 실측치로 **18/100** 이 나와야 정상이다.
+스킬을 고쳤으면 이걸 돌린다. 문서와 코드가 어긋났는지(필드명·열거형·스크립트명),
+스크립트가 여전히 도는지, 번들 픽스처의 정답 9개가 그대로 나오는지, 채점 회귀
+18/100이 유지되는지를 한 번에 본다. 종료 코드 0이면 전부 통과다.
 
 ```bash
-python3 scripts/scorecard.py --example
+python3 scripts/selfcheck.py
+```
+
+배점 로직만 확인하려면:
+
+```bash
+python3 scripts/scorecard.py --example    # 18/100 이 나와야 정상
 ```
 
 ## 산출물
@@ -112,5 +120,7 @@ scripts/fetch_chat.sh          yt-dlp 수집 래퍼
 scripts/analyze_chat.py        채팅 → 회차 지표
 scripts/make_measures.py       회차 지표 → 채점 입력 (순위상관·코호트 자동 계산)
 scripts/scorecard.py           측정치 → 점수·우선순위
+scripts/selfcheck.py           스킬 정합성 점검 (고친 뒤 돌린다)
 assets/report-skeleton.html    리포트 HTML 뼈대 (디자인 시스템 + 차트 헬퍼)
+assets/testdata/               selfcheck 가 쓰는 회귀 픽스처 (정답 검산됨)
 ```

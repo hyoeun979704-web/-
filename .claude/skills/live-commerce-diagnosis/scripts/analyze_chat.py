@@ -23,13 +23,19 @@ DEAD_THRESHOLD = 10      # 이 인원 이하인 버킷 = 죽은 구간
 OPENING_MIN = 20         # 오프닝 집중도 측정 구간(분)
 
 # 방송사 봇이 자동 송출하는 주문완료 로그. 채널마다 문구가 다르므로 조정 가능.
-ORDER_RE = re.compile(r"주문\s*완료")
+ORDER_RE = re.compile(r"주문\s*(?:완료|접수|확인)")
 # 마스킹된 구매자명 — "정*정님 주문완료!" 형태에서 이름을 집는다.
-BUYER_RE = re.compile(r"([^\s,]{1,20}?)\s*님?\s*주문\s*완료")
+# 두 가지 흔한 배치를 모두 잡는다 — "홍*동님 주문완료" 와 "★주문접수★ 홍*동".
+# 이름 자리는 한글·영숫자로 시작해야 한다. 그러지 않으면 앞의 장식 문자(★ 등)를
+# 이름으로 잡아 모든 주문이 같은 구매자로 합쳐진다.
+BUYER_RE = re.compile(
+    r"([가-힣A-Za-z0-9][^\s,/]{0,19})\s*님\s*주문\s*(?:완료|접수|확인)"
+    r"|주문\s*(?:완료|접수|확인)\s*[^\s가-힣A-Za-z0-9]*\s*([가-힣A-Za-z0-9][^\s,/]{0,19})")
 # 상품 식별자 — 봇 메시지 안의 상품코드/상품명. 채널 포맷에 맞게 조정.
-ITEM_RE = re.compile(r"\[([^\]]{1,40})\]")
+# 대괄호형 "[A100] …" 과 구분자 뒤 코드형 "… / PRD0" 을 모두 잡는다.
+ITEM_RE = re.compile(r"\[([^\]]{1,40})\]|[/|]\s*([A-Za-z0-9][\w.-]{0,19})\s*$")
 # 구매의사 발화. 벤치마크 채널에도 "똑같은 정규식"을 적용해야 비교가 성립한다.
-INTENT_RE = re.compile(r"주문|구매|결제|주세요|장바구니|살게요|살래요|담았")
+INTENT_RE = re.compile(r"주문|구매|구입|결제|주세요|장바구니|살게요|살래요|담았|사고\s*싶")
 # 피플라이브 선착순 주문 트리거
 JEOYO_RE = re.compile(r"^\s*저요\s*$")
 
@@ -112,6 +118,10 @@ def analyze(path, meta):
 
     no_offset = 0
     pre_show = 0
+    # 정규식이 안 맞아 봇을 놓쳤을 때 "누가 봇인지" 지목하기 위해 발화자별로 센다.
+    author_n = Counter()
+    author_sample = {}
+    badged = set()
     for obj in load_lines(path):
         for offset_ms, r in walk_actions(obj):
             text = runs_text(r.get("message", {}))
@@ -119,6 +129,10 @@ def analyze(path, meta):
                 continue
             name = r.get("authorName", {}).get("simpleText", "")
             owner, mod = author_flags(r)
+            author_n[name] += 1
+            author_sample.setdefault(name, text[:70])
+            if owner or mod:
+                badged.add(name)
             if offset_ms is None:
                 no_offset += 1
                 offset_ms = 0
@@ -135,10 +149,10 @@ def analyze(path, meta):
                 bucket_orders[b] += 1
                 mb = BUYER_RE.search(text)
                 if mb:
-                    buyers.add(mb.group(1))
+                    buyers.add(mb.group(1) or mb.group(2))
                 mi = ITEM_RE.search(text)
                 if mi:
-                    items[mi.group(1)] += 1
+                    items[mi.group(1) or mi.group(2)] += 1
                 continue
 
             chats += 1
@@ -157,6 +171,27 @@ def analyze(path, meta):
     # 죽은 구간을 세려면 후자를 써야 한다.
     highest = max(bucket_msgs) if bucket_msgs else 0
     n_buckets = max(int(duration_min // BUCKET_MIN), highest + 1, 1)
+
+    # ── 주문봇 미탐지 진단 ──────────────────────────────────────────────
+    # 정규식이 안 맞으면 오류 없이 orders=0 이 되고, 그 봇 메시지가 일반 채팅으로
+    # 섞여 참여자·구매의사 지표까지 함께 오염된다. 조용히 넘어가면 안 되는 실패다.
+    suspects = [(n, c) for n, c in author_n.most_common(6)
+                if n not in badged and c >= max(8, int(chats * 0.05))]
+    if orders == 0 and suspects:
+        print(f"  ! {vid}: 주문 로그를 한 건도 못 찾았다. ORDER_RE 가 이 채널 포맷과 "
+              f"안 맞을 가능성이 높다.", file=sys.stderr)
+        print(f"    반복 발화자 상위 — 이 중 봇이 있으면 정규식을 그 문구에 맞출 것:", file=sys.stderr)
+        for n, c in suspects[:3]:
+            print(f"      {n} · {c}건 · 예: {author_sample.get(n, '')!r}", file=sys.stderr)
+        print(f"    ※ 못 잡은 봇 메시지는 일반 채팅으로 집계되어 참여자·구매의사 지표도 "
+              f"함께 왜곡된다.", file=sys.stderr)
+    elif orders and not items:
+        print(f"  ! {vid}: 주문 {orders}건에서 상품코드를 하나도 못 뽑았다 — ITEM_RE 를 확인할 것. "
+              f"(top3_share_pct 를 0 이 아니라 null 로 남긴다 — 0 은 '완벽한 분산'으로 "
+              f"오독되어 채점에 만점을 준다)", file=sys.stderr)
+    elif orders and not buyers:
+        print(f"  ! {vid}: 주문 {orders}건을 찾았지만 구매자명을 하나도 못 뽑았다 — "
+              f"BUYER_RE 를 확인할 것.", file=sys.stderr)
 
     if no_offset:
         print(f"  ! {vid}: 채팅 {no_offset}건에 시각 정보가 없다 — 버킷 지표(첫20분·죽은구간)를 "
@@ -197,8 +232,11 @@ def analyze(path, meta):
         "jeoyo": jeoyo,
         "pre_show_chats": pre_show,
         "chats_without_timestamp": no_offset,
+        "top_authors": [{"name": n, "n": c, "sample": author_sample.get(n, "")}
+                        for n, c in author_n.most_common(5)],
         "items_seen": len(items),
-        "top3_share_pct": round(top3 / orders * 100, 1) if orders else None,
+        "top3_share_pct": (round(top3 / orders * 100, 1)
+                           if orders and items else None),
         # --- 차트용 원자료 ---
         "buckets": {
             "size_min": BUCKET_MIN,
