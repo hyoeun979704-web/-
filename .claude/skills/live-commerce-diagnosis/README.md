@@ -59,7 +59,13 @@ bash scripts/fetch_chat.sh @Yellowberry77 chats/ 8
 # 3) 회차별 지표 계산
 python3 scripts/analyze_chat.py chats/*.live_chat.json --views chats/views.json -o runs.json
 
-# 4) 채점 — measures.json 은 references/04-scorecard.md 참조
+# 4) 채점 입력 만들기 (조회수·구매자·순위상관·죽은구간·진행자 코호트를 자동 계산)
+python3 scripts/make_measures.py runs.json -o measures.json
+
+# 5) measures.json 의 _todo 에 남은 값을 직접 채운다 — 퍼널 홉 수, 가격대 비중 등
+#    (채팅에 없는 값이라 1단계에서 직접 확인해야 한다)
+
+# 6) 채점
 python3 scripts/scorecard.py measures.json
 ```
 
@@ -104,6 +110,7 @@ references/04-scorecard.md     12항목 100점 채점 기준
 references/05-report.md        12장 리포트 구조와 집필 규칙
 scripts/fetch_chat.sh          yt-dlp 수집 래퍼
 scripts/analyze_chat.py        채팅 → 회차 지표
+scripts/make_measures.py       회차 지표 → 채점 입력 (순위상관·코호트 자동 계산)
 scripts/scorecard.py           측정치 → 점수·우선순위
 assets/report-skeleton.html    리포트 HTML 뼈대 (디자인 시스템 + 차트 헬퍼)
 ```

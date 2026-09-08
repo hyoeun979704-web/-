@@ -40,6 +40,51 @@ RESULT_ITEMS = {"A1", "A3"}
 PLATFORM_ITEMS = {"B1", "B3"}
 
 
+# 열거형 항목의 허용값 — measures.json 검증에 쓴다.
+ENUMS = {
+    "inapp_checkout":  {"full": 1.0, "partial": .5, "none": 0.0},
+    "guest_checkout":  {"guest": 1.0, "social_1tap": .571, "signup_required": .143, "app_required": 0.0},
+    "size_coverage":   {"broad": 1.0, "two": .571, "one_plus": .286, "single": .143},
+    "vod_longtail":    {"all": 1.0, "30d": .75, "recent_few": .125, "live_only": 0.0},
+}
+
+NUMERIC = ["views", "buyers", "participants", "view_buy_rho", "hops",
+           "impulse_price_share", "top3_share", "seller_chat_now",
+           "seller_chat_peak", "dead_ratio"]
+
+# 0 이면 나눗셈이 터지는 값들
+NONZERO = {"views": "조회수", "seller_chat_peak": "진행자 채팅 최고 코호트"}
+
+
+def validate(m):
+    """빠져 있거나 잘못된 입력을 트레이스백 대신 사람이 읽는 말로 알린다."""
+    problems = []
+    todo = m.get("_todo", {})
+    for k in NUMERIC:
+        if m.get(k) is None:
+            hint = todo.get(k, "")
+            problems.append(f"  · {k} 없음" + (f" — {hint}" if hint else ""))
+        elif not isinstance(m[k], (int, float)):
+            problems.append(f"  · {k} 는 숫자여야 한다 (지금: {m[k]!r})")
+    for k, table in ENUMS.items():
+        v = m.get(k)
+        if v is None:
+            hint = todo.get(k, "")
+            problems.append(f"  · {k} 없음" + (f" — {hint}" if hint else ""))
+        elif v not in table:
+            problems.append(f"  · {k} = {v!r} 는 허용값이 아니다. "
+                            f"가능한 값: {' / '.join(table)}")
+    for k, label in NONZERO.items():
+        if isinstance(m.get(k), (int, float)) and m[k] == 0:
+            problems.append(f"  · {k}({label})가 0이라 비율을 낼 수 없다")
+    if problems:
+        raise SystemExit(
+            "measures.json 을 채워야 채점할 수 있다:\n" + "\n".join(problems)
+            + "\n\nmake_measures.py 로 자동 채울 수 있는 값은 채우고, "
+              "나머지는 references/04-scorecard.md 를 참고할 것."
+        )
+
+
 def band(value, cuts):
     """cuts = [(임계값, 비율), ...] 내림차순. value 이상인 첫 구간의 비율을 쓴다."""
     for threshold, ratio in cuts:
@@ -58,6 +103,7 @@ def band_desc(value, cuts):
 
 def score(m):
     """m: 측정치 dict → {코드: (획득점수, 만점, 근거문자열)}"""
+    validate(m)
     r = {}
 
     # ---- A · 트래픽 품질 ----
@@ -74,7 +120,7 @@ def score(m):
                f"채팅 참여자 {m['participants']:,}명 ÷ 조회수 = {part:.2f}%")
 
     # ---- B · 결제 경로 ----
-    r["B1"] = ({"full": 1.0, "partial": .5, "none": 0.0}[m["inapp_checkout"]],
+    r["B1"] = (ENUMS["inapp_checkout"][m["inapp_checkout"]],
                f"인앱 결제 = {m['inapp_checkout']}")
 
     hops = m["hops"]
@@ -82,7 +128,7 @@ def score(m):
                f"결제까지 {hops}홉 — {' → '.join(m.get('hop_path', []))}" if m.get("hop_path")
                else f"결제까지 {hops}홉")
 
-    r["B3"] = ({"guest": 1.0, "social_1tap": .571, "signup_required": .143, "app_required": 0.0}[m["guest_checkout"]],
+    r["B3"] = (ENUMS["guest_checkout"][m["guest_checkout"]],
                f"게스트 결제 = {m['guest_checkout']}")
 
     # ---- C · 상품 적합성 ----
@@ -94,7 +140,7 @@ def score(m):
     r["C2"] = (band_desc(top3, [(30, 1.0), (45, .75), (60, .375), (80, .25), (100, .125)]),
                f"상위 3품목이 주문의 {top3:.1f}%")
 
-    r["C3"] = ({"broad": 1.0, "two": .571, "one_plus": .286, "single": .143}[m["size_coverage"]],
+    r["C3"] = (ENUMS["size_coverage"][m["size_coverage"]],
                f"사이즈 커버리지 = {m['size_coverage']}")
 
     # ---- D · 방송 운영 ----
@@ -106,7 +152,7 @@ def score(m):
     r["D2"] = (band_desc(dead, [(10, 1.0), (25, .75), (40, .5), (60, .25), (100, .125)]),
                f"죽은 10분 구간 {dead:.1f}%")
 
-    r["D3"] = ({"all": 1.0, "30d": .75, "recent_few": .125, "live_only": 0.0}[m["vod_longtail"]],
+    r["D3"] = (ENUMS["vod_longtail"][m["vod_longtail"]],
                f"VOD 롱테일 = {m['vod_longtail']}")
 
     out = {}
@@ -160,7 +206,7 @@ def report(m):
 # 옐로우베리 46회차 실측치 — 스코어카드 회귀 테스트용 고정 입력
 EXAMPLE = {
     "views": 422400, "buyers": 1536, "participants": 1330,
-    "view_buy_rho": -0.85,
+    "view_buy_rho": -0.882,   # 원본 13회차에서 실제 계산한 값
     "inapp_checkout": "none", "hops": 4,
     "hop_path": ["youtube", "인포크링크", "fple.live", "카카오 로그인", "주문"],
     "guest_checkout": "signup_required",

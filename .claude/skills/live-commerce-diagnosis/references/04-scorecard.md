@@ -16,12 +16,22 @@
 
 ## 입력
 
-`measures.json` 을 만들어 `scripts/scorecard.py` 에 넘긴다. 값은 전부 1~3단계 실측치다.
+`make_measures.py` 가 `runs.json` 에서 자동으로 채워 준다 — 조회수·구매자·참여자 합계,
+순위상관 `view_buy_rho`(스피어만, 동점은 평균 순위), 죽은 구간 평균, 상위3품목 평균,
+그리고 회차 날짜가 있으면 진행자 응대 코호트(`seller_chat_now`/`_peak`)까지.
+
+```bash
+python3 scripts/make_measures.py runs.json -o measures.json
+```
+
+**채팅에 없는 값은 `_todo` 로 남는다** — 퍼널 홉 수, 인앱/게스트 결제, 가격대 비중,
+사이즈 커버리지, VOD 롱테일. 전부 1단계에서 직접 확인해야 하는 것들이다.
+빠진 채로 채점하면 `scorecard.py` 가 무엇이 없는지 알려주고 멈춘다.
 
 ```json
 {
   "views": 422400, "buyers": 1536, "participants": 1330,
-  "view_buy_rho": -0.85,
+  "view_buy_rho": -0.882,
   "inapp_checkout": "none",
   "hops": 4, "hop_path": ["youtube", "인포크링크", "fple.live", "카카오 로그인", "주문"],
   "guest_checkout": "signup_required",

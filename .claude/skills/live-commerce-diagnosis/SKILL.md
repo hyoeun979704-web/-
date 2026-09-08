@@ -31,6 +31,7 @@ description: 라이브 커머스·라방 채널의 "조회수는 나오는데 �
 | 0 | 범위 확정 — 채널, 기간, 회차 수, 셀러가 준 질문 | 아래 |
 | 1 | 수집 — 채팅 리플레이 전량 · 상품 카탈로그 · 퍼널 동선 | `references/01-collect.md` |
 | 2 | 계산 — 회차별 지표 (`scripts/analyze_chat.py`) | `references/02-metrics.md` |
+| 2.5 | 집계 — 회차 지표를 채점 입력으로 (`scripts/make_measures.py`) | `references/04-scorecard.md` |
 | 3 | 벤치마크 — 동급 채널 선정 후 **같은 파이프라인** 적용 | `references/03-benchmark.md` |
 | 4 | 채점 — 12항목 100점 (`scripts/scorecard.py`) | `references/04-scorecard.md` |
 | 5 | 집필 — 12장 구조 리포트를 아티팩트로 발행 | `references/05-report.md` |
@@ -58,6 +59,11 @@ description: 라이브 커머스·라방 채널의 "조회수는 나오는데 �
 않는다. 대상 채널의 주문봇 메시지는 벤치마크 비교 시 **제외하고** 다시 센다 — 상대
 채널엔 봇이 없으므로.
 
+**버킷 지표는 한 번 눈으로 검산한다.** 채팅 시각 파싱이 조용히 실패하면 첫20분
+집중도가 100%로, 죽은 구간이 90%대로 나온다 — 오류 없이 그럴듯한 숫자가 나오므로
+알아채기 어렵다. `analyze_chat.py` 가 시각 없는 채팅을 발견하면 경고하지만,
+첫 회차에서는 결과가 상식적인지(첫20분이 100%가 아닌지) 직접 확인할 것.
+
 **모르는 것을 모른다고 쓴다.** 리포트에 "이 보고서가 답하지 못하는 것" 장을 반드시
 넣는다. 그 장이 다음 계약(트래킹 구축)의 근거가 된다.
 
@@ -79,6 +85,9 @@ bash scripts/fetch_chat.sh "https://www.youtube.com/watch?v=VIDEOID" chats/
 
 # 지표 계산
 python3 scripts/analyze_chat.py chats/*.live_chat.json --views views.json -o runs.json
+
+# 채점 입력 만들기 — 자동 계산되는 값은 채우고, 직접 봐야 하는 값은 _todo 로 남는다
+python3 scripts/make_measures.py runs.json -o measures.json
 
 # 채점
 python3 scripts/scorecard.py measures.json

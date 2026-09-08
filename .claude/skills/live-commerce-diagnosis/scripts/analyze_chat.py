@@ -49,15 +49,25 @@ def load_lines(path):
 
 
 def walk_actions(obj):
-    """replayChatItemAction 안에 묻힌 채팅 렌더러를 시각(ms)과 함께 꺼낸다."""
-    for act in obj.get("replayChatItemAction", {}).get("actions", []):
+    """replayChatItemAction 안에 묻힌 채팅 렌더러를 시각(ms)과 함께 꺼낸다.
+
+    시각은 yt-dlp 버전에 따라 세 곳 중 하나에 있다. 우선순위를 지켜 읽지 않으면
+    전부 0으로 떨어져 모든 채팅이 첫 버킷에 몰린다 — 오류 없이 first20=100%,
+    dead_ratio가 엉뚱하게 나오는 조용한 실패다. 못 찾으면 None을 돌려 호출부가
+    센다.
+    """
+    replay = obj.get("replayChatItemAction", {})
+    for act in replay.get("actions", []):
         item = act.get("addChatItemAction", {}).get("item", {})
         r = item.get("liveChatTextMessageRenderer")
-        if r:
-            offset = obj.get("videoOffsetTimeMsec")
-            if offset is None:
-                offset = act.get("videoOffsetTimeMsec", 0)
-            yield int(offset), r
+        if not r:
+            continue
+        offset = replay.get("videoOffsetTimeMsec")          # 가장 흔한 위치
+        if offset is None:
+            offset = obj.get("videoOffsetTimeMsec")         # 최상위에도 실릴 때가 있다
+        if offset is None:
+            offset = act.get("videoOffsetTimeMsec")
+        yield (None if offset is None else int(offset)), r
 
 
 def runs_text(message):
@@ -100,6 +110,8 @@ def analyze(path, meta):
     bucket_orders = Counter()
     last_ms = 0
 
+    no_offset = 0
+    pre_show = 0
     for obj in load_lines(path):
         for offset_ms, r in walk_actions(obj):
             text = runs_text(r.get("message", {}))
@@ -107,6 +119,13 @@ def analyze(path, meta):
                 continue
             name = r.get("authorName", {}).get("simpleText", "")
             owner, mod = author_flags(r)
+            if offset_ms is None:
+                no_offset += 1
+                offset_ms = 0
+            elif offset_ms < 0:
+                # 방송 시작 전 대기 채팅. 오프닝 구간으로 합친다.
+                pre_show += 1
+                offset_ms = 0
             b = offset_ms // 60000 // BUCKET_MIN
             last_ms = max(last_ms, offset_ms)
 
@@ -134,7 +153,14 @@ def analyze(path, meta):
                 jeoyo += 1
 
     duration_min = meta.get("duration_min") or (last_ms / 60000 if last_ms else 0)
-    n_buckets = max(int(duration_min // BUCKET_MIN) or 1, len(bucket_msgs))
+    # 채팅이 드문드문이면 "값이 있는 버킷 수"와 "최대 버킷 인덱스"가 크게 벌어진다.
+    # 죽은 구간을 세려면 후자를 써야 한다.
+    highest = max(bucket_msgs) if bucket_msgs else 0
+    n_buckets = max(int(duration_min // BUCKET_MIN), highest + 1, 1)
+
+    if no_offset:
+        print(f"  ! {vid}: 채팅 {no_offset}건에 시각 정보가 없다 — 버킷 지표(첫20분·죽은구간)를 "
+              f"신뢰하지 말 것. yt-dlp 출력 포맷을 확인하라.", file=sys.stderr)
     dead = sum(1 for b in range(n_buckets) if len(bucket_people.get(b, ())) <= DEAD_THRESHOLD)
     open_buckets = max(OPENING_MIN // BUCKET_MIN, 1)
     open_msgs = sum(bucket_msgs.get(b, 0) for b in range(open_buckets))
@@ -148,6 +174,7 @@ def analyze(path, meta):
     return {
         "id": vid,
         "title": meta.get("title", ""),
+        "date": meta.get("date", ""),
         "kind": meta.get("kind", ""),
         "views": views,
         "duration_min": round(duration_min, 1),
@@ -168,6 +195,8 @@ def analyze(path, meta):
         "first20_share_pct": round(open_msgs / chats * 100, 1) if chats else None,
         "dead_ratio_pct": round(dead / n_buckets * 100, 1) if n_buckets else None,
         "jeoyo": jeoyo,
+        "pre_show_chats": pre_show,
+        "chats_without_timestamp": no_offset,
         "items_seen": len(items),
         "top3_share_pct": round(top3 / orders * 100, 1) if orders else None,
         # --- 차트용 원자료 ---
